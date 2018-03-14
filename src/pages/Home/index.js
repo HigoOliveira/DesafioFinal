@@ -8,6 +8,7 @@ import UserActions from 'store/ducks/user';
 
 /* Presentational */
 import { View, Button, TextInput } from 'react-native';
+import Alert from 'components/Alert';
 
 
 // import styles from './styles';
@@ -24,6 +25,8 @@ class Home extends Component {
     const { cellphone } = this.state;
     if (cellphone) {
       this.props.getInformation();
+    } else {
+      Alert.alert('Você precisa passar um número válido.');
     }
   }
 

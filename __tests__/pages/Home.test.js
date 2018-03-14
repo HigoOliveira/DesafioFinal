@@ -1,10 +1,17 @@
+/* Core */
 import React from 'react';
+
+/* Test */
 import { shallow } from 'enzyme';
+import sinon from 'sinon';
 
-
+/**
+ * Presentational
+ */
 import { Button } from 'react-native';
 
 import Home from 'pages/Home';
+import Alert from 'components/Alert';
 
 /* redux */
 import configureStore from 'redux-mock-store';
@@ -15,10 +22,6 @@ const mockStore = configureStore([]);
 const initialStore = {
   user: {},
 };
-
-// Custom mock
-
-jest.mock('Alert', () => ({ alert: jest.fn() }));
 
 describe('Testing Home Page', () => {
   const store = mockStore(initialStore);
@@ -43,7 +46,9 @@ describe('Testing Home Page', () => {
   });
 
   it('Can\'t get user information when is invalid cell phone', () => {
+    sinon.spy(Alert, 'alert');
     wrapper.find(Button).simulate('press');
     expect(store.getActions()).not.toContainEqual(ActionCreators.userGetInformation());
+    expect(Alert.alert.calledOnce).toBe(true);
   });
 });
