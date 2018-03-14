@@ -8,7 +8,7 @@ import sinon from 'sinon';
 /**
  * Presentational
  */
-import { Button } from 'react-native';
+import { Button, TextInput } from 'react-native';
 
 import SignUp from 'pages/SignUp';
 import Alert from 'components/Alert';
@@ -39,8 +39,28 @@ describe('Testing SignUp Page', () => {
     store.clearActions();
   });
 
-  it('Can sign up', () => {
+  it('Render 3 fields for user to fill', () => {
+    expect(wrapper.find(TextInput)).toHaveLength(3);
+  });
+
+  it('Render at least one password', () => {
+    expect(wrapper.find({ secureTextEntry: true })).toHaveLength(1);
+  });
+
+  it('Can sign up if informations is valid', () => {
+    wrapper.setState({
+      cellphone: '(99) 9999-9999',
+      fullname: 'Higo de Oliveira Ribeiro',
+      password: 'higo1234',
+    });
     wrapper.find(Button).simulate('press');
     expect(store.getActions()).toContainEqual(ActionCreators.userSignUp());
+  });
+
+  it('Can\'t sign up if informations is valid', () => {
+    sinon.spy(Alert, 'alert');
+    wrapper.find(Button).simulate('press');
+    expect(store.getActions()).not.toContainEqual(ActionCreators.userSignUp());
+    expect(Alert.alert.calledOnce).toBe(true);
   });
 });

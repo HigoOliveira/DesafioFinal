@@ -4,6 +4,7 @@ import { createReducer, createActions } from 'reduxsauce';
 
 const { Types, Creators } = createActions({
   userGetInformation: null,
+  userSignUp: null,
 });
 
 export { Types };
@@ -19,8 +20,11 @@ export const INITIAL_STATE = {
 
 export const getUserInformation = state => ({...state, loading: true });
 
+export const signUp = state => state;
+
 
 /* Reducers to types */
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.USER_GET_INFORMATION]: getUserInformation,
+  [Types.USER_SIGN_UP]: signUp,
 });
