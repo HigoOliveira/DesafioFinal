@@ -60,7 +60,7 @@ describe('Testing SignUp Page', () => {
   it('Can\'t sign up if informations is valid', () => {
     sinon.spy(Alert, 'alert');
     wrapper.find(Button).simulate('press');
-    expect(store.getActions()).not.toContainEqual(ActionCreators.userSignUp());
+    expect(store.getActions()).toEqual([]);
     expect(Alert.alert.calledOnce).toBe(true);
   });
 });
