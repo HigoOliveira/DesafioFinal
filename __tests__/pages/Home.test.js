@@ -16,6 +16,10 @@ const initialStore = {
   user: {},
 };
 
+// Custom mock
+
+jest.mock('Alert', () => ({ alert: jest.fn() }));
+
 describe('Testing Home Page', () => {
   const store = mockStore(initialStore);
   let wrapper;
