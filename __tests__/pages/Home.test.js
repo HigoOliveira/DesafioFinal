@@ -18,6 +18,7 @@ const initialStore = {
 
 describe('Testing Home Page', () => {
   const store = mockStore(initialStore);
+  let wrapper;
 
   function createWrapper() {
     return shallow(
@@ -25,16 +26,20 @@ describe('Testing Home Page', () => {
       { context: { store } },
     );
   }
+
+  beforeEach(() => {
+    wrapper = createWrapper().dive();
+    store.clearActions();
+  });
+
   it('Can get user information when is valid cell phone', () => {
-    const wrapper = createWrapper().dive();
     wrapper.setState({ cellphone: '(99) 9999-9999' });
     wrapper.find(Button).simulate('press');
     expect(store.getActions()).toContainEqual(ActionCreators.userGetInformation());
   });
 
   it('Can\'t get user information when is invalid cell phone', () => {
-    const wrapper = createWrapper().dive();
     wrapper.find(Button).simulate('press');
-    expect(store.getActions()).not.toContain(ActionCreators.userGetInformation());
+    expect(store.getActions()).not.toContainEqual(ActionCreators.userGetInformation());
   });
 });
