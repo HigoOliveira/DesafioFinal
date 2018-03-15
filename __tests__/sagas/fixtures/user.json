@@ -1,6 +1,9 @@
 {
   "/api/user/9999999999" : {
-    "cellphone": "9999999999",
-    "name" : "Higo de Oliveira Ribeiro"
-  }
+    "user" : {
+      "cellphone": "9999999999",
+      "name" : "Higo de Oliveira Ribeiro"
+    }
+  },
+  "/api/user/doesexist" : {}
 }

@@ -5,6 +5,7 @@ import { createReducer, createActions } from 'reduxsauce';
 const { Types, Creators } = createActions({
   userGetInformation: ['cellphone'],
   userSuccessGetInformation: ['data'],
+  userDoesExist: ['cellphone'],
   userSignUp: null,
   userSignIn: null,
 });
@@ -30,6 +31,12 @@ export const successGetInformation = (state, action) => ({
   loading: false,
 });
 
+export const doesExist = (state, action) => ({
+  ...state,
+  cellphone: action.cellphone,
+  loading: false,
+});
+
 export const signUp = state => state;
 export const signIn = state => state;
 
@@ -37,6 +44,7 @@ export const signIn = state => state;
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.USER_GET_INFORMATION]: getUserInformation,
   [Types.USER_SUCCESS_GET_INFORMATION]: successGetInformation,
+  [Types.USER_DOES_EXIST]: doesExist,
   [Types.USER_SIGN_UP]: signUp,
   [Types.USER_SIGN_IN]: signIn,
 });

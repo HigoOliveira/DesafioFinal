@@ -34,4 +34,15 @@ describe('Testing User Saga', () => {
 
     expect(sagaTester.getLatestCalledAction()).toEqual(NavigationActions.navigate({ routeName: 'SignIn' }));
   });
+
+  it('Can\'t get user information', async () => {
+    apiMock.onGet('/api/user/doesexist')
+      .reply(200, userFixture['/api/user/doesexist']);
+    sagaTester.dispatch(ActionCreators.userGetInformation('doesexist'));
+
+    await sagaTester.waitFor(ActionCreators.userDoesExist().type);
+    await sagaTester.waitFor(NavigationActions.navigate({ routeName: 'SignIn' }).type);
+
+    expect(sagaTester.getLatestCalledAction()).toEqual(NavigationActions.navigate({ routeName: 'SignUp' }));
+  });
 });

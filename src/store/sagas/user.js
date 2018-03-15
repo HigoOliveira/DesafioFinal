@@ -6,7 +6,12 @@ import ActionCreators from 'store/ducks/user';
 export function* getUserInformation(action) {
   const response = yield call(api.get, `/api/user/${action.cellphone}`);
   if (response.ok) {
-    yield put(ActionCreators.userSuccessGetInformation(response.data));
-    yield put(NavigationActions.navigate({ routeName: 'SignIn' }));
+    if (response.data.user) {
+      yield put(ActionCreators.userSuccessGetInformation(response.data));
+      yield put(NavigationActions.navigate({ routeName: 'SignIn' }));
+    } else {
+      yield put(ActionCreators.userDoesExist(action.cellphone));
+      yield put(NavigationActions.navigate({ routeName: 'SignUp' }));
+    }
   }
 }
