@@ -24,7 +24,7 @@ class Home extends Component {
   validation = () => {
     const { cellphone } = this.state;
     if (cellphone) {
-      this.props.getInformation();
+      this.props.getInformation('9999999999');
     } else {
       Alert.alert('Você precisa passar um número válido.');
     }
@@ -44,7 +44,7 @@ class Home extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  getInformation: () => dispatch(UserActions.userGetInformation()),
+  getInformation: cellphone => dispatch(UserActions.userGetInformation(cellphone)),
 });
 
 export default connect(null, mapDispatchToProps)(Home);
