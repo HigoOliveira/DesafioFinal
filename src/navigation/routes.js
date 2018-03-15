@@ -11,10 +11,14 @@ const HomeRoutes = StackNavigator({
   Home: { screen: Home },
   SignUp: { screen: SignUp },
   SignIn: { screen: SignIn },
+}, {
+  headerMode: 'none',
 });
 
 const Routes = StackNavigator({
   Init: { screen: HomeRoutes },
+}, {
+  headerMode: 'none',
 });
 
 export default Routes;
