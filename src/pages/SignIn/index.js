@@ -31,21 +31,22 @@ class SignIn extends Component {
     return (
       <View>
         <TextInput
-          onChangeText={(cellphone) => { this.setState({ cellphone }); }}
-          value={this.state.cellphone}
+          value={this.props.cellphone}
         />
         <TextInput
           onChangeText={(password) => { this.setState({ password }); }}
           secureTextEntry
           value={this.state.password}
         />
-        <Button title="Criar conta grátis" onPress={this.validation} />
+        <Button title="Entrar" onPress={this.validation} />
       </View>
     );
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  cellphone: state.user.cellphone,
+});
 
 const mapDispatchToProps = dispatch => ({
   signIn: () => dispatch(ActionCreators.userSignIn()),

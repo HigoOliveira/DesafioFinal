@@ -10,8 +10,8 @@ import UserActions from 'store/ducks/user';
 import { View, Button, TextInput } from 'react-native';
 import Alert from 'components/Alert';
 
+import styles from './styles';
 
-// import styles from './styles';
 class Home extends Component {
   static propTypes = {
     getInformation: PropTypes.func.isRequired,
@@ -24,7 +24,7 @@ class Home extends Component {
   validation = () => {
     const { cellphone } = this.state;
     if (cellphone) {
-      this.props.getInformation('9999999999');
+      this.props.getInformation(cellphone);
     } else {
       Alert.alert('Você precisa passar um número válido.');
     }
@@ -32,7 +32,7 @@ class Home extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <TextInput
           onChangeText={(cellphone) => { this.setState({ cellphone }); }}
           value={this.state.cellphone}
