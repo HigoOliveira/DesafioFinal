@@ -3,10 +3,16 @@ import { colors, fonts, metrics } from 'styles';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: metrics.padding,
-    backgroundColor: colors.primary,
+    height: 54,
+    backgroundColor: colors.secondary,
+    borderRadius: metrics.radius,
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    color: colors.white,
+    fontSize: fonts.big,
+    fontWeight: 'bold',
   },
 });
 

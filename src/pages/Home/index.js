@@ -7,8 +7,10 @@ import { connect } from 'react-redux';
 import UserActions from 'store/ducks/user';
 
 /* Presentational */
-import { View, Button, TextInput } from 'react-native';
+import { View, TextInput } from 'react-native';
 import Alert from 'components/Alert';
+import Button from 'components/Button';
+import Input from 'components/Input';
 
 import styles from './styles';
 
@@ -33,9 +35,12 @@ class Home extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TextInput
+        <Input
           onChangeText={(cellphone) => { this.setState({ cellphone }); }}
           value={this.state.cellphone}
+          type="cel-phone"
+          icon="phone"
+          placeholder="Seu número de telefone"
         />
         <Button title="Entrar" onPress={this.validation} />
       </View>

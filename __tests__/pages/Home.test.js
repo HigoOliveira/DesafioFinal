@@ -8,7 +8,7 @@ import sinon from 'sinon';
 /**
  * Presentational
  */
-import { Button } from 'react-native';
+import Button from 'components/Button';
 
 import Home from 'pages/Home';
 import Alert from 'components/Alert';
