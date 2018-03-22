@@ -26,7 +26,8 @@ class Home extends Component {
   validation = () => {
     const { cellphone } = this.state;
     if (cellphone) {
-      this.props.getInformation(cellphone);
+      const { input } = this.input;
+      this.props.getInformation(input.getRawValue());
     } else {
       Alert.alert('Você precisa passar um número válido.');
     }
@@ -41,6 +42,7 @@ class Home extends Component {
           type="cel-phone"
           icon="phone"
           placeholder="Seu número de telefone"
+          ref={(ref) => { this.input = ref; }}
         />
         <Button title="Entrar" onPress={this.validation} />
       </View>
