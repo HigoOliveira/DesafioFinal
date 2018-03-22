@@ -6,37 +6,47 @@ import { connect } from 'react-redux';
 import ActionCreators from 'store/ducks/user';
 
 /* Presentational */
-import { View, Button, TextInput } from 'react-native';
+import { View } from 'react-native';
 import Alert from 'components/Alert';
+import Input from 'components/Input';
+import Button from 'components/Button';
 
-
-// import styles from './styles';
+import styles from './styles';
 
 class SignIn extends Component {
   state = {
-    cellphone: '',
     password: '',
   }
 
   validation = () => {
-    const { cellphone, password } = this.state;
+    const { password } = this.state;
+    const { cellphone } = this.props;
     if (cellphone && password) {
       this.props.signIn();
     } else {
-      Alert.alert('Por favor entre com dados válidos para poder registrar.');
+      Alert.alert('Por favor entre com dados válidos para poder acessar.');
     }
   }
 
   render() {
     return (
-      <View>
-        <TextInput
+      <View style={styles.container}>
+        <Input
           value={this.props.cellphone}
+          type="cel-phone"
+          icon="phone"
+          placeholder="Seu número de telefone"
+          ref={(ref) => { this.input = ref; }}
+          editable={false}
         />
-        <TextInput
+        <Input
           onChangeText={(password) => { this.setState({ password }); }}
-          secureTextEntry
           value={this.state.password}
+          type="none"
+          icon="lock"
+          placeholder="Sua senha secreta"
+          secureTextEntry
+          ref={(ref) => { this.input = ref; }}
         />
         <Button title="Entrar" onPress={this.validation} />
       </View>
