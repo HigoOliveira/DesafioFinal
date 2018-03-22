@@ -8,7 +8,9 @@ import sinon from 'sinon';
 /**
  * Presentational
  */
-import { Button, TextInput } from 'react-native';
+
+import Button from 'components/Button';
+import Input from 'components/Input';
 
 import SignIn from 'pages/SignIn';
 import Alert from 'components/Alert';
@@ -40,7 +42,7 @@ describe('Testing SignIn Page', () => {
   });
 
   it('Render 2 fields for user to fill', () => {
-    expect(wrapper.find(TextInput)).toHaveLength(2);
+    expect(wrapper.find(Input)).toHaveLength(2);
   });
 
   it('Render at least one password', () => {
@@ -49,8 +51,10 @@ describe('Testing SignIn Page', () => {
 
   it('Can sign in if informations is valid', () => {
     wrapper.setState({
-      cellphone: '(99) 9999-9999',
       password: 'higo1234',
+    });
+    wrapper.setProps({
+      cellphone: '9999999999',
     });
     wrapper.find(Button).simulate('press');
     expect(store.getActions()).toContainEqual(ActionCreators.userSignIn());
