@@ -1,9 +1,8 @@
 {
-  "/api/user/9999999999" : {
-    "user" : {
-      "cellphone": "9999999999",
-      "name" : "Higo de Oliveira Ribeiro"
-    }
+  "/api/verify-user-exists/+559999999999" : {
+    "phone" : "+559999999999"
   },
-  "/api/user/doesexist" : {}
+  "/api/verify-user-exists/doesexist" : {
+    "detail": "Não encontrado."
+  }
 }

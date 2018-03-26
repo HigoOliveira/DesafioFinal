@@ -4,10 +4,10 @@ import { NavigationActions } from 'react-navigation';
 import ActionCreators from 'store/ducks/user';
 
 export function* getUserInformation(action) {
-  const response = yield call(api.get, `/api/user/${action.cellphone}`);
+  const response = yield call(api.get, `/api/verify-user-exists/${action.cellphone}`);
   if (response.ok) {
-    if (response.data.user) {
-      yield put(ActionCreators.userSuccessGetInformation(response.data.user));
+    if (response.data.phone) {
+      yield put(ActionCreators.userSuccessGetInformation(response.data.phone));
       yield put(NavigationActions.navigate({ routeName: 'SignIn' }));
     } else {
       yield put(ActionCreators.userDoesExist(action.cellphone));

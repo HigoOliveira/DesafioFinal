@@ -25,9 +25,9 @@ describe('Testing User Saga', () => {
   });
 
   it('Can get user information', async () => {
-    apiMock.onGet('/api/user/9999999999')
-      .reply(200, userFixture['/api/user/9999999999']);
-    sagaTester.dispatch(ActionCreators.userGetInformation('9999999999'));
+    apiMock.onGet('/api/verify-user-exists/+559999999999')
+      .reply(200, userFixture['/api/verify-user-exists/+559999999999']);
+    sagaTester.dispatch(ActionCreators.userGetInformation('+559999999999'));
 
     await sagaTester.waitFor(ActionCreators.userSuccessGetInformation().type);
     await sagaTester.waitFor(NavigationActions.navigate({ routeName: 'SignIn' }).type);
@@ -36,8 +36,8 @@ describe('Testing User Saga', () => {
   });
 
   it('Can\'t get user information', async () => {
-    apiMock.onGet('/api/user/doesexist')
-      .reply(200, userFixture['/api/user/doesexist']);
+    apiMock.onGet('/api/verify-user-exists/doesexist')
+      .reply(200, userFixture['/api/verify-user-exists/doesexist']);
     sagaTester.dispatch(ActionCreators.userGetInformation('doesexist'));
 
     await sagaTester.waitFor(ActionCreators.userDoesExist().type);
