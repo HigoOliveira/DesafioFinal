@@ -9,10 +9,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  clean: {
+    height: 34,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   title: {
     color: colors.white,
     fontSize: fonts.big,
     fontWeight: 'bold',
+  },
+  titleClean: {
+    fontSize: fonts.small,
   },
 });
 

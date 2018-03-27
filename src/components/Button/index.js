@@ -5,18 +5,23 @@ import { TouchableOpacity, Text } from 'react-native';
 
 import styles from './styles';
 
-const Button = ({ onPress, title }) => (
+const Button = ({ onPress, title, clean }) => (
   <TouchableOpacity
     onPress={onPress}
-    style={styles.container}
+    style={!clean ? styles.container : styles.clean}
   >
-    <Text style={styles.title}>{title.toUpperCase()}</Text>
+    <Text style={[styles.title, clean ? styles.titleClean : null]}>{clean ? title : title.toUpperCase()}</Text>
   </TouchableOpacity>
 );
 
 Button.propTypes = {
   onPress: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
+  clean: PropTypes.bool,
+};
+
+Button.defaultProps = {
+  clean: false,
 };
 
 export default Button;
