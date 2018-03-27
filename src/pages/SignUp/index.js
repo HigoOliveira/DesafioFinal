@@ -6,52 +6,72 @@ import { connect } from 'react-redux';
 import ActionCreators from 'store/ducks/user';
 
 /* Presentational */
-import { View, Button, TextInput } from 'react-native';
+import { View } from 'react-native';
 import Alert from 'components/Alert';
+import Input from 'components/Input';
+import Button from 'components/Button';
 
 
-// import styles from './styles';
+import styles from './styles';
 
 class SignUp extends Component {
 
   state = {
     cellphone: '',
-    fullname: '',
+    name: '',
     password: '',
   }
 
   validation = () => {
-    const { cellphone, fullname, password } = this.state;
-    if (cellphone && fullname && password) {
+    const { cellphone, name, password } = this.state;
+    if (cellphone && name && password) {
       this.props.signUp();
     } else {
       Alert.alert('Por favor entre com dados válidos para poder registrar.');
     }
   }
 
+  number = () => {
+    const { cellphone } = this.props;
+    return cellphone.substring(3);
+  }
+
   render() {
     return (
-      <View>
-        <TextInput
-          onChangeText={(cellphone) => { this.setState({ cellphone }); }}
-          value={this.state.cellphone}
+      <View style={styles.container}>
+        <Input
+          value={this.number()}
+          type="cel-phone"
+          icon="phone"
+          placeholder="Seu número de telefone"
+          ref={(ref) => { this.input = ref; }}
+          editable={false}
         />
-        <TextInput
-          onChangeText={(fullname) => { this.setState({ fullname }); }}
-          value={this.state.fullname}
+        <Input
+          onChangeText={(name) => { this.setState({ name }); }}
+          value={this.state.name}
+          type="none"
+          icon="user"
+          placeholder="Nome completo"
         />
-        <TextInput
+        <Input
           onChangeText={(password) => { this.setState({ password }); }}
-          secureTextEntry
           value={this.state.password}
+          type="none"
+          icon="lock"
+          placeholder="Sua senha secreta"
+          secureTextEntry
         />
         <Button title="Criar conta grátis" onPress={this.validation} />
+        <Button title="Esqueci minha senha" onPress={() => {}} clean />
       </View>
     );
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  cellphone: state.user.cellphone,
+});
 
 const mapDispatchToProps = dispatch => ({
   signUp: () => dispatch(ActionCreators.userSignUp()),
