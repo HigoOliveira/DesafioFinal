@@ -7,7 +7,8 @@ const { Types, Creators } = createActions({
   userSuccessGetInformation: ['data'],
   userDoesExist: ['cellphone'],
   userSignUp: null,
-  userSignIn: null,
+  userLogin: ['username', 'password'],
+  userLoginSuccess: ['name', 'cellphone'],
 });
 
 export { Types };
@@ -18,7 +19,7 @@ export default Creators;
 export const INITIAL_STATE = {
   loading: false,
   cellphone: '',
-  fullname: '',
+  name: '',
 };
 
 /* Reducers */
@@ -26,8 +27,8 @@ export const INITIAL_STATE = {
 export const getUserInformation = state => ({ ...state, loading: true });
 export const successGetInformation = (state, action) => ({
   ...state,
-  cellphone: action.data.cellphone,
-  fullname: action.data.fullname,
+  cellphone: action.data.phone,
+  name: action.data.name,
   loading: false,
 });
 
@@ -37,8 +38,14 @@ export const doesExist = (state, action) => ({
   loading: false,
 });
 
-export const signUp = state => state;
-export const signIn = state => state;
+export const signUp = state => ({ ...state, loading: true });
+export const login = state => state;
+export const loginSuccess = (state, action) => ({
+  ...state,
+  cellphone: action.data.phone,
+  name: action.data.name,
+  loading: false,
+});
 
 /* Reducers to types */
 export const reducer = createReducer(INITIAL_STATE, {
@@ -46,5 +53,6 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.USER_SUCCESS_GET_INFORMATION]: successGetInformation,
   [Types.USER_DOES_EXIST]: doesExist,
   [Types.USER_SIGN_UP]: signUp,
-  [Types.USER_SIGN_IN]: signIn,
+  [Types.USER_LOGIN]: login,
+  [Types.USER_LOGIN_SUCCESS]: successGetInformation,
 });

@@ -1,4 +1,8 @@
 /* Core */
+import sinon from 'sinon';
+import { AsyncStorage } from 'react-native';
+
+/* Redux */
 import SagaTester from 'redux-saga-tester';
 import MockAdapter from 'axios-mock-adapter';
 
@@ -37,12 +41,21 @@ describe('Testing User Saga', () => {
 
   it('Can\'t get user information', async () => {
     apiMock.onGet('/api/verify-user-exists/doesexist')
-      .reply(200, userFixture['/api/verify-user-exists/doesexist']);
+      .reply(400, userFixture['/api/verify-user-exists/doesexist']);
     sagaTester.dispatch(ActionCreators.userGetInformation('doesexist'));
 
     await sagaTester.waitFor(ActionCreators.userDoesExist().type);
     await sagaTester.waitFor(NavigationActions.navigate({ routeName: 'SignIn' }).type);
 
     expect(sagaTester.getLatestCalledAction()).toEqual(NavigationActions.navigate({ routeName: 'SignUp' }));
+  });
+
+  it('User login valid access', async() => {
+    sinon.spy(AsyncStorage, 'setItem');
+    apiMock.onPost('/api/auth')
+      .reply(200, userFixture['/api/auth']);
+
+    sagaTester.dispatch(ActionCreators.userLogin('+559999999999', 'senha'));
+    //expect(AsyncStorage.setItem.calledOnce).toBe(true);
   });
 });

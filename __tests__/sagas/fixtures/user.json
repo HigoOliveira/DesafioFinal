@@ -4,5 +4,8 @@
   },
   "/api/verify-user-exists/doesexist" : {
     "detail": "Não encontrado."
+  },
+  "/api/auth" : {
+    "token" : "umtokenvalido"
   }
 }

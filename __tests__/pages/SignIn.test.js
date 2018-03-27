@@ -54,7 +54,7 @@ describe('Testing SignIn Page', () => {
       password: 'higo1234',
     });
     wrapper.setProps({
-      cellphone: '9999999999',
+      cellphone: '+559999999999',
     });
     wrapper.find(Button).simulate('press');
     expect(store.getActions()).toContainEqual(ActionCreators.userSignIn());

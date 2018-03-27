@@ -3,20 +3,29 @@
 import { StackNavigator } from 'react-navigation';
 
 /* Pages */
-import Home from 'pages/Home';
+import Start from 'pages/Start';
 import SignUp from 'pages/SignUp';
 import SignIn from 'pages/SignIn';
 
-const HomeRoutes = StackNavigator({
-  Home: { screen: Home },
+import Home from 'pages/Home';
+
+const LoggedOutStack = StackNavigator({
+  Start: { screen: Start },
   SignUp: { screen: SignUp },
   SignIn: { screen: SignIn },
 }, {
   headerMode: 'none',
 });
 
+const LoggedInStack = StackNavigator({
+  Home: { screen: Home },
+}, {
+  headerMode: 'none',
+});
+
 const Routes = StackNavigator({
-  Init: { screen: HomeRoutes },
+  LoggedOut: { screen: LoggedOutStack },
+  LoggedIn: { screen: LoggedInStack },
 }, {
   headerMode: 'none',
 });

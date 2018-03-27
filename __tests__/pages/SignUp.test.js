@@ -8,10 +8,10 @@ import sinon from 'sinon';
 /**
  * Presentational
  */
-import { Button, TextInput } from 'react-native';
-
 import SignUp from 'pages/SignUp';
 import Alert from 'components/Alert';
+import Button from 'components/Button';
+import Input from 'components/Input';
 
 /* redux */
 import configureStore from 'redux-mock-store';
@@ -39,8 +39,8 @@ describe('Testing SignUp Page', () => {
     store.clearActions();
   });
 
-  it('Render 3 fields for user to fill', () => {
-    expect(wrapper.find(TextInput)).toHaveLength(3);
+  it('Render rr3 fields for user to fill', () => {
+    expect(wrapper.find(Input)).toHaveLength(3);
   });
 
   it('Render at least one password', () => {

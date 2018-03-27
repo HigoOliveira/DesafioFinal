@@ -1,5 +1,6 @@
 /* Core */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 /* Redux */
 import { connect } from 'react-redux';
@@ -14,6 +15,10 @@ import Button from 'components/Button';
 import styles from './styles';
 
 class SignIn extends Component {
+  propTypes = {
+    login: PropTypes.func.isRequired,
+    cellphone: PropTypes.string.isRequired,
+  }
   state = {
     password: '',
   }
@@ -22,17 +27,22 @@ class SignIn extends Component {
     const { password } = this.state;
     const { cellphone } = this.props;
     if (cellphone && password) {
-      this.props.signIn();
+      this.props.login(cellphone, password);
     } else {
       Alert.alert('Por favor entre com dados válidos para poder acessar.');
     }
+  }
+
+  number = () => {
+    const { cellphone } = this.props;
+    return cellphone.substring(3);
   }
 
   render() {
     return (
       <View style={styles.container}>
         <Input
-          value={this.props.cellphone}
+          value={this.number()}
           type="cel-phone"
           icon="phone"
           placeholder="Seu número de telefone"
@@ -59,7 +69,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  signIn: () => dispatch(ActionCreators.userSignIn()),
+  login: (username, password) => dispatch(ActionCreators.userLogin(username, password)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
