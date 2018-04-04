@@ -11,10 +11,14 @@ import Routes from './routes';
 
 function ReduxNavigation(props) {
   const addListener = createReduxBoundAddListener('root');
-  const { dispatch, nav } = props;
+  const { dispatch, nav, isLoggedIn } = props;
+  const state = isLoggedIn
+    ? nav.stateForLoggedIn
+    : nav.stateForLoggedOut;
+  console.tron.log(state);
   const navigation = addNavigationHelpers({
     dispatch,
-    state: nav,
+    state,
     addListener,
   });
 
@@ -32,6 +36,7 @@ function ReduxNavigation(props) {
 }
 const mapStateToProps = state => ({
   nav: state.nav,
+  isLoggedIn: state.user.isLoggedIn,
 });
 
 export default connect(mapStateToProps)(ReduxNavigation);

@@ -20,6 +20,7 @@ export const INITIAL_STATE = {
   loading: false,
   cellphone: '',
   name: '',
+  isLoggedIn: false,
 };
 
 /* Reducers */
@@ -45,6 +46,7 @@ export const loginSuccess = (state, action) => ({
   cellphone: action.data.phone,
   name: action.data.name,
   loading: false,
+  isLoggedIn: true,
 });
 
 /* Reducers to types */
