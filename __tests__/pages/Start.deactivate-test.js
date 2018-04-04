@@ -10,7 +10,7 @@ import sinon from 'sinon';
  */
 import Button from 'components/Button';
 
-import Home from 'pages/Home';
+import Start from 'pages/Start';
 import Alert from 'components/Alert';
 
 /* redux */
@@ -23,13 +23,13 @@ const initialStore = {
   user: {},
 };
 
-describe('Testing Home Page', () => {
+describe('Testing Start Page', () => {
   const store = mockStore(initialStore);
   let wrapper;
 
   function createWrapper() {
     return shallow(
-      <Home />,
+      <Start />,
       { context: { store } },
     );
   }

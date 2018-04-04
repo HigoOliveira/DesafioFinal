@@ -1,7 +1,3 @@
-/* Core */
-import sinon from 'sinon';
-import { AsyncStorage } from 'react-native';
-
 /* Redux */
 import SagaTester from 'redux-saga-tester';
 import MockAdapter from 'axios-mock-adapter';
@@ -50,12 +46,14 @@ describe('Testing User Saga', () => {
     expect(sagaTester.getLatestCalledAction()).toEqual(NavigationActions.navigate({ routeName: 'SignUp' }));
   });
 
-  it('User login valid access', async() => {
-    sinon.spy(AsyncStorage, 'setItem');
+  it('User login valid access', async () => {
     apiMock.onPost('/api/auth')
       .reply(200, userFixture['/api/auth']);
-
     sagaTester.dispatch(ActionCreators.userLogin('+559999999999', 'senha'));
-    //expect(AsyncStorage.setItem.calledOnce).toBe(true);
+
+    // await sagaTester.waitFor(ActionCreators.userSuccessGetInformation().type);
+    await sagaTester.waitFor(NavigationActions.navigate({ routeName: 'Home' }).type);
+
+    expect(sagaTester.getLatestCalledAction()).toEqual(NavigationActions.navigate({ routeName: 'Home' }));
   });
 });
