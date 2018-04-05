@@ -1,6 +1,9 @@
 /* Core */
 import { StackNavigator } from 'react-navigation';
 
+/* Presentational */
+import { colors } from 'styles';
+
 /* Pages */
 import Start from 'pages/Start';
 import SignUp from 'pages/SignUp';
@@ -19,7 +22,18 @@ const LoggedOutStack = StackNavigator({
 const LoggedInStack = StackNavigator({
   Home: { screen: Home },
 }, {
-  headerMode: 'none',
+  navigationOptions: {
+    headerStyle: {
+      backgroundColor: colors.primary,
+      borderBottom: 0,
+      shadowRadius: 0,
+      shadowOpacity: 0,
+      shadowOffset: {
+        height: 0,
+      },
+    },
+    headerTintColor: colors.white,
+  },
 });
 
 const Routes = StackNavigator({

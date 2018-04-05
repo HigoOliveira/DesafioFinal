@@ -27,7 +27,7 @@ const navReducer = (state = initialState, action) => {
     case UserTypes.USER_LOGIN_SUCCESS:
       return {
         ...state,
-        stateForLoggedIn: Routes.routes.getStateForAction(ActionForLoggedIn, stateForLoggedOut),
+        stateForLoggedIn: Routes.router.getStateForAction(ActionForLoggedIn, stateForLoggedOut),
       };
     default:
       return {
