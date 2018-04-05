@@ -15,7 +15,6 @@ function ReduxNavigation(props) {
   const state = isLoggedIn
     ? nav.stateForLoggedIn
     : nav.stateForLoggedOut;
-  console.tron.log(state);
   const navigation = addNavigationHelpers({
     dispatch,
     state,
