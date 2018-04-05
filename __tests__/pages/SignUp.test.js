@@ -25,7 +25,7 @@ const initialStore = {
 };
 
 const cellphone = '+559999999999';
-const fullname = 'Higo de Oliveira Ribeiro';
+const name = 'Higo de Oliveira Ribeiro';
 const password = 'higo1234';
 
 describe('Testing SignUp Page', () => {
@@ -57,7 +57,7 @@ describe('Testing SignUp Page', () => {
 
   it('Can sign up if informations is valid', () => {
     wrapper.setState({
-      fullname,
+      name,
       password,
     });
     wrapper.find('#signup').simulate('press');
