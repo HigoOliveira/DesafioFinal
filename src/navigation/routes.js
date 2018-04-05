@@ -10,6 +10,7 @@ import SignUp from 'pages/SignUp';
 import SignIn from 'pages/SignIn';
 
 import Home from 'pages/Home';
+import Profile from 'pages/Profile';
 
 const LoggedOutStack = StackNavigator({
   Start: { screen: Start },
@@ -21,6 +22,7 @@ const LoggedOutStack = StackNavigator({
 
 const LoggedInStack = StackNavigator({
   Home: { screen: Home },
+  Profile: { screen: Profile },
 }, {
   navigationOptions: {
     headerStyle: {
