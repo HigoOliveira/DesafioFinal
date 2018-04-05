@@ -41,10 +41,8 @@ export const doesExist = (state, action) => ({
 
 export const signUp = state => ({ ...state, loading: true });
 export const login = state => state;
-export const loginSuccess = (state, action) => ({
+export const loginSuccess = state => ({
   ...state,
-  cellphone: action.data.phone,
-  name: action.data.name,
   loading: false,
   isLoggedIn: true,
 });
@@ -56,5 +54,5 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.USER_DOES_EXIST]: doesExist,
   [Types.USER_SIGN_UP]: signUp,
   [Types.USER_LOGIN]: login,
-  [Types.USER_LOGIN_SUCCESS]: successGetInformation,
+  [Types.USER_LOGIN_SUCCESS]: loginSuccess,
 });

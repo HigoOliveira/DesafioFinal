@@ -1,5 +1,6 @@
 /* Core */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 /* Redux */
 import { connect } from 'react-redux';
@@ -15,7 +16,10 @@ import Button from 'components/Button';
 import styles from './styles';
 
 class SignUp extends Component {
-
+  static propTypes = {
+    cellphone: PropTypes.string.isRequired,
+    signUp: PropTypes.func.isRequired,
+  }
   state = {
     cellphone: '',
     name: '',

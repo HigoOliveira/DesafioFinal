@@ -26,6 +26,7 @@ const initialStore = {
 describe('Testing Start Page', () => {
   const store = mockStore(initialStore);
   let wrapper;
+  sinon.spy(Start.prototype.input.input, 'getRawValue');
 
   function createWrapper() {
     return shallow(

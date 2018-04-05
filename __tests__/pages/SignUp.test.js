@@ -39,7 +39,7 @@ describe('Testing SignUp Page', () => {
     store.clearActions();
   });
 
-  it('Render rr3 fields for user to fill', () => {
+  it('Render 3 fields for user to fill', () => {
     expect(wrapper.find(Input)).toHaveLength(3);
   });
 

@@ -24,7 +24,7 @@ class Start extends Component {
   };
 
   validation = () => {
-    const { input } = this.input;
+    const { input } = this.input.input;
     if (input.isValid()) {
       const rawValue = input.getRawValue();
       this.props.getInformation(`+55${rawValue}`);

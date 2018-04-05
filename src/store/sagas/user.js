@@ -23,6 +23,7 @@ export function* login(action) {
     // }));
     // yield AsyncStorage.setItem(TOKEN_KEY, response.data.token);
     // console.tron.log(response);
+    yield put(ActionCreators.userLoginSuccess());
     yield put(NavigationActions.navigate({ routeName: 'Home' }));
   }
 }
