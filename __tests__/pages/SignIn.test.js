@@ -21,8 +21,13 @@ import ActionCreators from 'store/ducks/user';
 const mockStore = configureStore([]);
 
 const initialStore = {
-  user: {},
+  user: {
+    cellphone: '99999999999',
+  },
 };
+
+const cellphone = '+559999999999';
+const password = 'higo1234';
 
 describe('Testing SignIn Page', () => {
   const store = mockStore(initialStore);
@@ -36,9 +41,10 @@ describe('Testing SignIn Page', () => {
   }
 
   beforeEach(() => {
-    console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-    console.log(createWrapper());
     wrapper = createWrapper().dive();
+    wrapper.setProps({
+      cellphone,
+    });
     store.clearActions();
   });
 
@@ -52,13 +58,10 @@ describe('Testing SignIn Page', () => {
 
   it('Can sign in if informations is valid', () => {
     wrapper.setState({
-      password: 'higo1234',
-    });
-    wrapper.setProps({
-      cellphone: '+559999999999',
+      password,
     });
     wrapper.find(Button).simulate('press');
-    expect(store.getActions()).toContainEqual(ActionCreators.userSignIn());
+    expect(store.getActions()).toContainEqual(ActionCreators.userLogin(cellphone, password));
   });
 
   it('Can\'t sign up if informations is valid', () => {

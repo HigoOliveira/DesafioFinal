@@ -20,9 +20,13 @@ const mockStore = configureStore([]);
 
 const initialStore = {
   user: {
-    cellphone: '9999999999',
+    cellphone: '99999999999',
   },
 };
+
+const cellphone = '+559999999999';
+const fullname = 'Higo de Oliveira Ribeiro';
+const password = 'higo1234';
 
 describe('Testing SignUp Page', () => {
   const store = mockStore(initialStore);
@@ -38,7 +42,7 @@ describe('Testing SignUp Page', () => {
   beforeEach(() => {
     wrapper = createWrapper().dive();
     wrapper.setProps({
-      cellphone: '(99) 9999-9999',
+      cellphone,
     });
     store.clearActions();
   });
@@ -53,8 +57,8 @@ describe('Testing SignUp Page', () => {
 
   it('Can sign up if informations is valid', () => {
     wrapper.setState({
-      fullname: 'Higo de Oliveira Ribeiro',
-      password: 'higo1234',
+      fullname,
+      password,
     });
     wrapper.find('#signup').simulate('press');
     expect(store.getActions()).toContainEqual(ActionCreators.userSignUp());
