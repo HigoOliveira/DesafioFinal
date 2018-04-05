@@ -18,7 +18,6 @@ const initialState = { stateForLoggedOut, stateForLoggedIn };
 // };
 
 const navReducer = (state = initialState, action) => {
-  // console.tron.log(action.type);
   switch (action.type) {
     case '@@redux/INIT':
       return {
@@ -31,10 +30,6 @@ const navReducer = (state = initialState, action) => {
         stateForLoggedIn: Routes.routes.getStateForAction(ActionForLoggedIn, stateForLoggedOut),
       };
     default:
-      if (action.type === 'Navigation/NAVIGATE') {
-        console.tron.log(action);
-      }
-      // console.tron.log(Routes.router.getStateForAction(action, state.stateForLoggedIn));
       return {
         ...state,
         stateForLoggedIn: Routes.router.getStateForAction(action, state.stateForLoggedIn),
