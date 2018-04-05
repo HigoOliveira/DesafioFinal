@@ -51,9 +51,8 @@ describe('Testing User Saga', () => {
       .reply(200, userFixture['/api/auth']);
     sagaTester.dispatch(ActionCreators.userLogin('+559999999999', 'senha'));
 
-    // await sagaTester.waitFor(ActionCreators.userSuccessGetInformation().type);
-    await sagaTester.waitFor(NavigationActions.navigate({ routeName: 'Home' }).type);
+    await sagaTester.waitFor(ActionCreators.userLoginSuccess().type);
 
-    expect(sagaTester.getLatestCalledAction()).toEqual(NavigationActions.navigate({ routeName: 'Home' }));
+    expect(sagaTester.getLatestCalledAction()).toEqual(ActionCreators.userLoginSuccess());
   });
 });

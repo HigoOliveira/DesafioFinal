@@ -9,6 +9,7 @@ const { Types, Creators } = createActions({
   userSignUp: null,
   userLogin: ['username', 'password'],
   userLoginSuccess: null,
+  userLogout: null,
 });
 
 export { Types };
@@ -47,6 +48,8 @@ export const loginSuccess = state => ({
   isLoggedIn: true,
 });
 
+export const logout = () => INITIAL_STATE;
+
 /* Reducers to types */
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.USER_GET_INFORMATION]: getUserInformation,
@@ -55,4 +58,5 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.USER_SIGN_UP]: signUp,
   [Types.USER_LOGIN]: login,
   [Types.USER_LOGIN_SUCCESS]: loginSuccess,
+  [Types.USER_LOGOUT]: logout,
 });

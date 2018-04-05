@@ -18,6 +18,5 @@ export function* login(action) {
   const response = yield call(api.post, '/api/auth', { username: action.username, password: action.password });
   if (response.ok) {
     yield put(ActionCreators.userLoginSuccess());
-    yield put(NavigationActions.navigate({ routeName: 'Home' }));
   }
 }
