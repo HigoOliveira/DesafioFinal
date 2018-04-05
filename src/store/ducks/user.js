@@ -8,7 +8,7 @@ const { Types, Creators } = createActions({
   userDoesExist: ['cellphone'],
   userSignUp: null,
   userLogin: ['username', 'password'],
-  userLoginSuccess: ['name', 'cellphone'],
+  userLoginSuccess: null,
 });
 
 export { Types };

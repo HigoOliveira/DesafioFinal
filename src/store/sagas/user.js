@@ -17,12 +17,6 @@ export function* getUserInformation(action) {
 export function* login(action) {
   const response = yield call(api.post, '/api/auth', { username: action.username, password: action.password });
   if (response.ok) {
-    // yield put(ActionCreators.userLoginSuccess({
-    //   cellphone: '+5533',
-    //   name: 'Higo de Oliveira Ribeiro',
-    // }));
-    // yield AsyncStorage.setItem(TOKEN_KEY, response.data.token);
-    // console.tron.log(response);
     yield put(ActionCreators.userLoginSuccess());
     yield put(NavigationActions.navigate({ routeName: 'Home' }));
   }
