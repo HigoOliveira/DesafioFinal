@@ -6,5 +6,5 @@ export default {
   radius: 5,
   statusBarHeight: (Platform.OS === 'ios') ? 20 : 0,
   inputTextPaddingHorizontal: 20,
-  inputTextMarginBottom: 15,
+  inputTextMarginBottom: 10,
 };
