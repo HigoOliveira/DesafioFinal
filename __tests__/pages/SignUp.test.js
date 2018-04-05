@@ -10,7 +10,6 @@ import sinon from 'sinon';
  */
 import SignUp from 'pages/SignUp';
 import Alert from 'components/Alert';
-import Button from 'components/Button';
 import Input from 'components/Input';
 
 /* redux */
@@ -20,7 +19,9 @@ import ActionCreators from 'store/ducks/user';
 const mockStore = configureStore([]);
 
 const initialStore = {
-  user: {},
+  user: {
+    cellphone: '9999999999',
+  },
 };
 
 describe('Testing SignUp Page', () => {
@@ -36,6 +37,9 @@ describe('Testing SignUp Page', () => {
 
   beforeEach(() => {
     wrapper = createWrapper().dive();
+    wrapper.setProps({
+      cellphone: '(99) 9999-9999',
+    });
     store.clearActions();
   });
 
@@ -49,17 +53,16 @@ describe('Testing SignUp Page', () => {
 
   it('Can sign up if informations is valid', () => {
     wrapper.setState({
-      cellphone: '(99) 9999-9999',
       fullname: 'Higo de Oliveira Ribeiro',
       password: 'higo1234',
     });
-    wrapper.find(Button).simulate('press');
+    wrapper.find('#signup').simulate('press');
     expect(store.getActions()).toContainEqual(ActionCreators.userSignUp());
   });
 
   it('Can\'t sign up if informations is valid', () => {
     sinon.spy(Alert, 'alert');
-    wrapper.find(Button).simulate('press');
+    wrapper.find('#signup').simulate('press');
     expect(store.getActions()).toEqual([]);
     expect(Alert.alert.calledOnce).toBe(true);
   });

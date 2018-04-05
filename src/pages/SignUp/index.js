@@ -21,13 +21,13 @@ class SignUp extends Component {
     signUp: PropTypes.func.isRequired,
   }
   state = {
-    cellphone: '',
     name: '',
     password: '',
   }
 
   validation = () => {
-    const { cellphone, name, password } = this.state;
+    const { cellphone } = this.props;
+    const { name, password } = this.state;
     if (cellphone && name && password) {
       this.props.signUp();
     } else {
@@ -66,8 +66,8 @@ class SignUp extends Component {
           placeholder="Sua senha secreta"
           secureTextEntry
         />
-        <Button title="Criar conta grátis" onPress={this.validation} />
-        <Button title="Esqueci minha senha" onPress={() => {}} clean />
+        <Button id="signup" title="Criar conta grátis" onPress={this.validation} />
+        <Button id="signin" title="Já tenho conta" onPress={() => {}} clean />
       </View>
     );
   }

@@ -8,12 +8,11 @@ import sinon from 'sinon';
 /**
  * Presentational
  */
+import SignIn from 'pages/SignIn';
+import Alert from 'components/Alert';
 
 import Button from 'components/Button';
 import Input from 'components/Input';
-
-import SignIn from 'pages/SignIn';
-import Alert from 'components/Alert';
 
 /* redux */
 import configureStore from 'redux-mock-store';
@@ -37,6 +36,8 @@ describe('Testing SignIn Page', () => {
   }
 
   beforeEach(() => {
+    console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+    console.log(createWrapper());
     wrapper = createWrapper().dive();
     store.clearActions();
   });
