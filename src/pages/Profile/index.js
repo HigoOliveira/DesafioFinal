@@ -13,12 +13,20 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Input from 'components/Input';
 import Button from 'components/Button';
+import Alert from 'components/Alert';
 
 /* Styles */
 import { colors } from 'styles';
 import styles from './styles';
 
 class Profile extends Component {
+  static propTypes = {
+    navigation: PropTypes.shape({
+      setParams: PropTypes.func,
+    }).isRequired,
+    logout: PropTypes.func.isRequired,
+    updateInformation: PropTypes.func.isRequired,
+  };
   static navigationOptions = ({ navigation }) => ({
     title: 'SCHEDULE',
     headerTitleStyle: styles.headerTitle,
@@ -37,6 +45,13 @@ class Profile extends Component {
 
   componentDidMount() {
     this.props.navigation.setParams({ logout: () => this.props.logout() });
+  }
+
+  update = () => {
+    const { name, password, confirmPassword } = this.state;
+    if (!name && !password && !confirmPassword) {
+      Alert.alert('Nada será atualizado enquanto os campos estiverem em branco');
+    } else if ((password && !confirmPassword) || (password !== confirmPassword)) { Alert.alert('As senhas precisam ser iguais!'); } else { this.props.updateInformation(name, password, confirmPassword); }
   }
 
   render() {
@@ -70,7 +85,7 @@ class Profile extends Component {
             placeholder="Confirme a senha digitada"
             secureTextEntry
           />
-          <Button title="Alterar informações" onPress={() => {}} />
+          <Button title="Alterar informações" onPress={this.update} />
         </View>
       </View>
     );
@@ -79,6 +94,8 @@ class Profile extends Component {
 
 const mapDispatchToProps = dispatch => ({
   logout: () => dispatch(ActionCreators.userLogout()),
+  updateInformation: (name, password, confirmPassword) =>
+    dispatch(ActionCreators.userUpdateInformation(name, password, confirmPassword)),
 });
 
 export default connect(null, mapDispatchToProps)(Profile);
