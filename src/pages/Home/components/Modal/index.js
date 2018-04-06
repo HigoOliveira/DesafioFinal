@@ -13,13 +13,29 @@ import {
 import Button from 'components/Button';
 import Input from 'components/Input';
 import InputDatePicker from 'components/InputDatePicker';
+import Alert from 'components/Alert';
 
 import styles from './styles';
 
 class Modal extends Component {
   state = {
     datetime: '',
+    name: '',
+    where: '',
   }
+
+  closeModal = () => {
+    this.props.onCloseModal();
+    this.setState({ datetime: '' });
+  };
+
+  saveEvent = () => {
+    const { datetime, name, where } = this.state;
+    if (!datetime && !name && !where) {
+      Alert.alert('Você precisa preencher todos os campos para poder adicionar um novo evento!');
+    }
+  }
+
   render() {
     return (
       <ModalNative
@@ -40,19 +56,23 @@ class Modal extends Component {
               placeholder="Qual o nome do evento?"
               type="none"
               secondary
+              value={this.state.name}
+              onChangeText={(name) => { this.setState({ name }); }}
             />
             <Input
               placeholder="Onde irá ocorrer?"
               type="none"
               secondary
+              value={this.state.where}
+              onChangeText={(where) => { this.setState({ where }); }}
             />
 
             <Button
               title="Criar evento"
-              onPress={() => {}}
+              onPress={this.saveEvent}
             />
             <TouchableOpacity
-              onPress={this.props.onCloseModal}
+              onPress={this.closeModal}
               style={styles.cancelButton}
             >
               <Text style={styles.cancelButtonText} >Cancelar</Text>
