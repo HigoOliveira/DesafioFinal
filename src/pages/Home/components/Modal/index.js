@@ -9,26 +9,31 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+
 import Button from 'components/Button';
 import Input from 'components/Input';
+import InputDatePicker from 'components/InputDatePicker';
 
 import styles from './styles';
 
 class Modal extends Component {
+  state = {
+    datetime: '',
+  }
   render() {
     return (
       <ModalNative
-        animationType='slide'
+        animationType="slide"
         visible={this.props.visible}
         transparent
         onRequestClose={() => {}}
       >
         <View style={styles.overlay}>
           <View style={styles.container}>
-            <Input
-              icon="calendar"
+            <InputDatePicker
               placeholder="Selecione a data e o horário"
-              type="none"
+              value={this.state.datetime}
+              onDateChange={(datetime) => { this.setState({ datetime }); }}
               secondary
             />
             <Input
@@ -43,13 +48,11 @@ class Modal extends Component {
             />
 
             <Button
-              title='Criar evento'
+              title="Criar evento"
               onPress={() => {}}
             />
-            <TouchableOpacity 
-              onPress={() => {
-                this.props.onCloseModal();
-              }}
+            <TouchableOpacity
+              onPress={this.props.onCloseModal}
               style={styles.cancelButton}
             >
               <Text style={styles.cancelButtonText} >Cancelar</Text>
@@ -57,7 +60,7 @@ class Modal extends Component {
           </View>
         </View>
       </ModalNative>
-    )
+    );
   }
 }
 

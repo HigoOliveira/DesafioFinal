@@ -28,7 +28,7 @@ export default class Input extends Component {
     value: '',
     secureTextEntry: false,
     editable: true,
-    secondary: true,
+    secondary: false,
     onChangeText: (text) => {},
   };
 
@@ -57,13 +57,13 @@ export default class Input extends Component {
         <InputText
           ref={(ref) => { this.input = ref; }}
           type={type}
-          style={[styles.input, secondary ? { color: colors.dustyGrey } : null]}
+          style={[styles.input, secondary ? colors.dustyGrey : null]}
           underlineColorAndroid="rgba(0,0,0,0)"
           value={value}
           placeholder={placeholder}
           onChangeText={onChangeText}
           secureTextEntry={secureTextEntry}
-          placeholderTextColor={secondary ? { color: colors.dustyGrey } : colors.white}
+          placeholderTextColor={secondary ? colors.dustyGrey : colors.white}
           editable={editable}
         />
       </View>
