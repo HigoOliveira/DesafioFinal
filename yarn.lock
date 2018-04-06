@@ -3969,6 +3969,10 @@ mitt@^1.1.2:
   dependencies:
     minimist "0.0.8"
 
+moment@2.x.x:
+  version "2.22.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.0.tgz#7921ade01017dd45186e7fee5f424f0b8663a730"
+
 moment@^2.19.1:
   version "2.21.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.21.0.tgz#2a114b51d2a6ec9e6d83cf803f838a878d8a023a"
@@ -4615,6 +4619,12 @@ react-native-calendars@^1.17.6:
   dependencies:
     prop-types "^15.5.10"
     xdate "^0.8.0"
+
+react-native-datepicker@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-datepicker/-/react-native-datepicker-1.6.0.tgz#3a40dc9b112023c49d60ba2a0789d440b7e3d97c"
+  dependencies:
+    moment "2.x.x"
 
 react-native-dismiss-keyboard@1.0.0:
   version "1.0.0"
