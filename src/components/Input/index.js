@@ -13,12 +13,9 @@ import styles from './styles';
 
 export default class Input extends Component {
   static propTypes = {
-    icon: PropTypes.string.isRequired,
     value: PropTypes.string,
-    type: PropTypes.string.isRequired,
     onChangeText: PropTypes.func,
     placeholder: PropTypes.string,
-    secureTextEntry: PropTypes.bool,
     editable: PropTypes.bool,
     secondary: PropTypes.bool,
   };
@@ -53,11 +50,16 @@ export default class Input extends Component {
 
     return (
       <View style={[styles.container, secondary ? { backgroundColor: colors.gallery } : null]} >
-        <Icon name={icon} size={20} color={secondary ? colors.dustyGrey : colors.white} style={styles.icon} />
+        <Icon
+          name={icon}
+          size={20}
+          color={secondary ? colors.dustyGrey : colors.white}
+          style={styles.icon}
+        />
         <InputText
           ref={(ref) => { this.input = ref; }}
           type={type}
-          style={[styles.input, secondary ? colors.dustyGrey : null]}
+          style={[styles.input, secondary ? { color: colors.dustyGrey } : null]}
           underlineColorAndroid="rgba(0,0,0,0)"
           value={value}
           placeholder={placeholder}

@@ -14,22 +14,17 @@ import styles from './styles';
 export default class InputDatePicker extends Component {
   static propTypes = {
     value: PropTypes.string,
-    type: PropTypes.string.isRequired,
     onDateChange: PropTypes.func.isRequired,
     placeholder: PropTypes.string,
-    secureTextEntry: PropTypes.bool,
-    editable: PropTypes.bool,
     secondary: PropTypes.bool,
   };
 
   static defaultProps = {
     placeholder: '',
     value: '',
-    secureTextEntry: false,
-    editable: true,
     secondary: true,
   };
- 
+
   constructor(props) {
     super(props);
     this.input = null;
@@ -38,11 +33,7 @@ export default class InputDatePicker extends Component {
   render() {
     const {
       value,
-      type,
       placeholder,
-      onChangeText,
-      secureTextEntry,
-      editable,
       secondary,
     } = this.props;
 
