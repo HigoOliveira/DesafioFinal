@@ -20,6 +20,7 @@ export default class Input extends Component {
     placeholder: PropTypes.string,
     secureTextEntry: PropTypes.bool,
     editable: PropTypes.bool,
+    secondary: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -27,6 +28,7 @@ export default class Input extends Component {
     value: '',
     secureTextEntry: false,
     editable: true,
+    secondary: true,
     onChangeText: (text) => {},
   };
 
@@ -44,23 +46,24 @@ export default class Input extends Component {
       onChangeText,
       secureTextEntry,
       editable,
+      secondary,
     } = this.props;
 
     const InputText = type === 'none' ? TextInput : TextInputMask;
 
     return (
-      <View style={styles.container} >
-        <Icon name={icon} size={20} color={colors.white} style={styles.icon} />
+      <View style={[styles.container, secondary ? { backgroundColor: colors.gallery } : null]} >
+        <Icon name={icon} size={20} color={secondary ? colors.dustyGrey : colors.white} style={styles.icon} />
         <InputText
           ref={(ref) => { this.input = ref; }}
           type={type}
-          style={styles.input}
+          style={[styles.input, secondary ? { color: colors.dustyGrey } : null]}
           underlineColorAndroid="rgba(0,0,0,0)"
           value={value}
           placeholder={placeholder}
           onChangeText={onChangeText}
           secureTextEntry={secureTextEntry}
-          placeholderTextColor={colors.white}
+          placeholderTextColor={secondary ? { color: colors.dustyGrey } : colors.white}
           editable={editable}
         />
       </View>
