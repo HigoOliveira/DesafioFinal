@@ -16,6 +16,9 @@ import IconAwesome from 'react-native-vector-icons/FontAwesome';
 import { colors } from 'styles';
 import styles from './styles';
 
+/* Component */
+import Modal from './components/Modal';
+
 class Home extends Component {
   static propTypes = {
   };
@@ -23,7 +26,7 @@ class Home extends Component {
     title: 'SCHEDULE',
     headerTitleStyle: styles.headerTitle,
     headerLeft: (
-      <TouchableOpacity onPress={() => {}} style={styles.headerLeft}>
+      <TouchableOpacity onPress={navigation.state.params ? navigation.state.params.showModal : null} style={styles.headerLeft}>
         <IconMaterial name="add-circle" size={24} color={colors.secondary} />
       </TouchableOpacity>
     ),
@@ -33,6 +36,19 @@ class Home extends Component {
       </TouchableOpacity>
     ),
   });
+
+  state = {
+    showModal: false,
+  }
+
+  componentDidMount() {
+    this.props.navigation.setParams({ showModal: () => this.showModal() });
+  }
+
+  showModal = () => {
+    this.setState({ showModal: true });
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -48,6 +64,10 @@ class Home extends Component {
             arrowColor: colors.white,
             todayTextColor: colors.white,
           }}
+        />
+        <Modal
+          visible={this.state.showModal}
+          onCloseModal={() => this.setState({ showModal: false })}
         />
       </View>
     );
