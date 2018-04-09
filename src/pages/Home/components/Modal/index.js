@@ -9,6 +9,9 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+/* Redux */
+import { connect } from 'react-redux';
+import ActionCreators from 'store/ducks/event';
 
 import Button from 'components/Button';
 import Input from 'components/Input';
@@ -31,8 +34,10 @@ class Modal extends Component {
 
   saveEvent = () => {
     const { datetime, name, where } = this.state;
-    if (!datetime && !name && !where) {
+    if (!datetime || !name || !where) {
       Alert.alert('Você precisa preencher todos os campos para poder adicionar um novo evento!');
+    } else {
+      this.props.addNew(datetime, name, where);
     }
   }
 
@@ -48,7 +53,7 @@ class Modal extends Component {
           <View style={styles.container}>
             <InputDatePicker
               placeholder="Selecione a data e o horário"
-              value={this.state.datetime}
+              date={this.state.datetime}
               onDateChange={(datetime) => { this.setState({ datetime }); }}
               secondary
             />
@@ -84,4 +89,8 @@ class Modal extends Component {
   }
 }
 
-export default Modal;
+const mapDispatchToProps = dispatch => ({
+  addNew: (datetime, name, where) => dispatch(ActionCreators.eventAddNew(datetime, name, where)),
+});
+
+export default connect(null, mapDispatchToProps)(Modal);

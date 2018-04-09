@@ -2,7 +2,7 @@ import { createReducer, createActions } from 'reduxsauce';
 
 /* Types & Action Creators */
 const { Types, Creators } = createActions({
-
+  eventAddNew: ['datetime', 'name', 'where'],
 });
 
 export { Types };

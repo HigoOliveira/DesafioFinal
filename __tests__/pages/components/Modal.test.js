@@ -13,8 +13,10 @@ import Alert from 'components/Alert';
 import Button from 'components/Button';
 import Input from 'components/Input';
 import InputDatePicker from 'components/InputDatePicker';
-/* redux */
+
+/* Redux */
 import configureStore from 'redux-mock-store';
+import ActionCreators from 'store/ducks/event';
 
 const mockStore = configureStore([]);
 
@@ -86,5 +88,15 @@ describe('Modal', () => {
       name,
     });
     sameTestToCantAdd();
+  });
+
+  it('Can add event when every fields is fill', () => {
+    wrapper.setState({
+      datetime,
+      name,
+      where,
+    });
+    wrapper.find(Button).simulate('press');
+    expect(store.getActions()).toContainEqual(ActionCreators.eventAddNew(datetime, name, where));
   });
 });
