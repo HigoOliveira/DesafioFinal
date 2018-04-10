@@ -12,3 +12,21 @@ export default Creators;
 export const INITIAL_STATE = {
   list: [],
 };
+
+/* Reducers */
+export const addNew = (state, action) => ({
+  ...state,
+  list: [
+    ...state.list,
+    {
+      datetime: action.datime,
+      name: action.name,
+      where: action.where,
+    },
+  ],
+});
+
+/* Reducers to types */
+export const reducer = createReducer(INITIAL_STATE, {
+  [Types.EVENT_ADD_NEW]: addNew,
+});
