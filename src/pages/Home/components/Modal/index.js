@@ -38,6 +38,7 @@ class Modal extends Component {
       Alert.alert('Você precisa preencher todos os campos para poder adicionar um novo evento!');
     } else {
       this.props.addNew(datetime, name, where);
+      this.closeModal();
     }
   }
 
@@ -53,7 +54,7 @@ class Modal extends Component {
           <View style={styles.container}>
             <InputDatePicker
               placeholder="Selecione a data e o horário"
-              date={this.state.datetime}
+              value={this.state.datetime}
               onDateChange={(datetime) => { this.setState({ datetime }); }}
               secondary
             />

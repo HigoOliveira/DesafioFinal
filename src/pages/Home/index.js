@@ -18,15 +18,22 @@ import styles from './styles';
 
 /* Component */
 import Modal from './components/Modal';
+import EventList from './components/EventList';
 
 class Home extends Component {
   static propTypes = {
+    navigation: PropTypes.shape({
+      setParams: PropTypes.func,
+    }).isRequired,
   };
   static navigationOptions = ({ navigation }) => ({
     title: 'SCHEDULE',
     headerTitleStyle: styles.headerTitle,
     headerLeft: (
-      <TouchableOpacity onPress={navigation.state.params ? navigation.state.params.showModal : null} style={styles.headerLeft}>
+      <TouchableOpacity
+        onPress={navigation.state.params ? navigation.state.params.showModal : null}
+        style={styles.headerLeft}
+      >
         <IconMaterial name="add-circle" size={24} color={colors.secondary} />
       </TouchableOpacity>
     ),
@@ -69,6 +76,7 @@ class Home extends Component {
           visible={this.state.showModal}
           onCloseModal={() => this.setState({ showModal: false })}
         />
+        <EventList />
       </View>
     );
   }
