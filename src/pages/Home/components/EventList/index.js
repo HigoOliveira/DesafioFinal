@@ -14,6 +14,7 @@ import styles from './styles';
 const EventList = ({ events }) => (
   <FlatList
     style={styles.container}
+    contentContainerStyle={styles.content}
     data={events}
     renderItem={(event) => <EventItem event={event} />}
   />

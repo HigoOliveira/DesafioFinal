@@ -1,9 +1,10 @@
 export default {
   primary: '#A55BD7',
-  secondary: '#49C7A7',
-  dustyGrey: '#999999',
   primaryDarker: '#8B48B8',
+  secondary: '#49C7A7',
 
+  nimeShaft: '#333333',
+  dustyGrey: '#999999',
   light: '#DDD',
   gallery: '#EEEEEE',
   white: '#FFFFFF',
