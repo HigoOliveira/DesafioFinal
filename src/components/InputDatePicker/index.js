@@ -21,7 +21,7 @@ export default class InputDatePicker extends Component {
 
   static defaultProps = {
     placeholder: '',
-    value: '',
+    value: null,
     secondary: true,
   };
 
