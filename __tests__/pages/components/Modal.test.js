@@ -35,8 +35,9 @@ describe('Modal', () => {
   let alert;
 
   function createWrapper() {
+    const onCloseModal = jest.fn();
     return shallow(
-      <Modal />,
+      <Modal onCloseModal={onCloseModal} />,
       { context: { store } },
     );
   }
@@ -99,4 +100,5 @@ describe('Modal', () => {
     wrapper.find(Button).simulate('press');
     expect(store.getActions()).toContainEqual(ActionCreators.eventAddNew(datetime, name, where));
   });
+
 });
