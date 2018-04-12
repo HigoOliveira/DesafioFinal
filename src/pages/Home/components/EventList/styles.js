@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    padding: metrics.padding,
+    // padding: metrics.padding,
   },
 });
 

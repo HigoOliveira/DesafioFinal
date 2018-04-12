@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     borderRadius: metrics.radius,
     padding: metrics.padding,
+    margin: metrics.margin,
     flexDirection: 'row',
   },
   mainContainer: {
@@ -24,6 +25,22 @@ const styles = StyleSheet.create({
   datetime: {
     color: colors.dustyGrey,
     fontSize: fonts.base,
+  },
+  swipeout: {
+    backgroundColor: colors.transparent,
+  },
+  buttonContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.primary,
+  },
+  button: {
+    height: 78,
+    width: 70,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: metrics.radius,
   },
 });
 
