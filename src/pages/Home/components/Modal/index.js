@@ -1,5 +1,6 @@
 /* Core */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 /* Presentational */
 import {
@@ -21,6 +22,11 @@ import Alert from 'components/Alert';
 import styles from './styles';
 
 class Modal extends Component {
+  static propTypes = {
+    onCloseModal: PropTypes.func.isRequired,
+    addNew: PropTypes.func.isRequired,
+    visible: PropTypes.bool.isRequired,
+  }
   state = {
     datetime: '',
     name: '',

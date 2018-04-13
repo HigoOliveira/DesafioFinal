@@ -16,8 +16,11 @@ export default class Input extends Component {
     value: PropTypes.string,
     onChangeText: PropTypes.func,
     placeholder: PropTypes.string,
+    icon: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
     editable: PropTypes.bool,
     secondary: PropTypes.bool,
+    secureTextEntry: PropTypes.bool,
   };
 
   static defaultProps = {
