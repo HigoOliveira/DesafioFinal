@@ -1,19 +1,22 @@
 /* Core */
 import React from 'react';
 
+import _ from 'lodash';
+
 /* Redux */
 import { connect } from 'react-redux';
-import ActionCreators from 'store/ducks/event';
 
 /* Presentational */
-import { FlatList } from 'react-native';
 import EventItem from './components/EventItem';
 
-import styles from './styles';
+// import styles from './styles';
 
-const EventList = ({ events }) => (
+const EventList = ({ events, currentDate }) => (
   <React.Fragment>
-    {events.map(event => <EventItem event={event} />)}
+    {_.filter(events, (n) => {
+      const datetime = (n.datetime && n.datetime.split(' ')[0]) || '';
+      return datetime === currentDate;
+    }).map(event => <EventItem event={event} />)}
   </React.Fragment>
 );
 

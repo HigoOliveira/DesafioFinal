@@ -53,6 +53,7 @@ class Home extends Component {
   state = {
     showModal: false,
     scrollY: new Animated.Value(0),
+    currentDate: moment().format('YYYY-MM-DD'),
   }
 
   componentDidMount() {
@@ -69,7 +70,7 @@ class Home extends Component {
       HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
       this.forceUpdate();
     }
-    if (event.nativeEvent.layout.height ===  HEADER_MIN_HEIGHT) {
+    if (event.nativeEvent.layout.height === HEADER_MIN_HEIGHT) {
       this.setState({ semana: true });
     } else {
       this.setState({ semana: false });
@@ -103,9 +104,9 @@ class Home extends Component {
           todayTextColor: colors.white,
         }}
         markedDates={{
-          [this.state.currentDate || moment().format('YYYY-MM-DD')]: { selected: true },
+          [this.state.currentDate]: { selected: true },
         }}
-        onDayPress={(day) => { this.setState({ currentDate: day.dateString }); }}
+        onDayPress={(day) => { this.changedDate(day.dateString); }}
       />
     );
   }
@@ -136,7 +137,7 @@ class Home extends Component {
           onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])}
         >
           <View style={{ marginTop: HEADER_MAX_HEIGHT }}>
-            <EventList />
+            <EventList currentDate={this.state.currentDate} />
           </View>
         </ScrollView>
         <Animated.View style={[styles1.header, { height: headerHeight }]} onLayout={event => this._getComponentDimensions(event)}>

@@ -19,7 +19,7 @@ export const addNew = (state, action) => ({
   list: [
     ...state.list,
     {
-      datetime: action.datime,
+      datetime: action.datetime,
       name: action.name,
       where: action.where,
     },
