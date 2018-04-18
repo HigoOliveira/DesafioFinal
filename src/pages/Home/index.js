@@ -21,7 +21,7 @@ import Modal from './components/Modal';
 import EventList from './components/EventList';
 import DayCalendar from './components/DayCalendar';
 
-const HEADER_MIN_HEIGHT = 45;
+const HEADER_MIN_HEIGHT = 44;
 let HEADER_MAX_HEIGHT = 0;
 let HEADER_SCROLL_DISTANCE = 0;
 
