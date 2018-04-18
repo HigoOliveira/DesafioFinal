@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 /* Presentational */
-import { View, TouchableOpacity, ScrollView, Animated } from 'react-native';
+import { View, TouchableOpacity, ScrollView, Animated, Text } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 
 import IconMaterial from 'react-native-vector-icons/MaterialIcons';
@@ -19,6 +19,7 @@ import styles from './styles';
 /* Component */
 import Modal from './components/Modal';
 import EventList from './components/EventList';
+import DayCalendar from './components/DayCalendar';
 
 const HEADER_MIN_HEIGHT = 45;
 let HEADER_MAX_HEIGHT = 0;
@@ -66,6 +67,32 @@ class Home extends Component {
       HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
       this.forceUpdate();
     }
+    if (event.nativeEvent.layout.height ===  HEADER_MIN_HEIGHT) {
+      this.setState({ semana: true });
+    } else {
+      this.setState({ semana: false });
+    }
+  }
+
+  renderCalendar = () => {
+    if (this.state.semana) {
+      return <DayCalendar />;
+    }
+    return (
+      <Calendar
+        theme={{
+          backgroundColor: colors.primaryDarker,
+          calendarBackground: colors.primaryDarker,
+          selectedDayBackgroundColor: colors.secondary,
+          selectedDayTextColor: colors.white,
+          textDisabledColor: colors.white,
+          monthTextColor: colors.white,
+          dayTextColor: colors.white,
+          arrowColor: colors.white,
+          todayTextColor: colors.white,
+        }}
+      />
+    );
   }
 
   render() {
@@ -93,33 +120,17 @@ class Home extends Component {
           scrollEventThrottle={16}
           onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])}
         >
-          <View style={{marginTop: HEADER_MAX_HEIGHT}}>
+          <View style={{ marginTop: HEADER_MAX_HEIGHT }}>
             <EventList />
           </View>
         </ScrollView>
         <Animated.View style={[styles1.header, { height: headerHeight }]} onLayout={event => this._getComponentDimensions(event)}>
-          <Calendar
-            theme={{
-              backgroundColor: colors.primaryDarker,
-              calendarBackground: colors.primaryDarker,
-              selectedDayBackgroundColor: colors.secondary,
-              selectedDayTextColor: colors.white,
-              textDisabledColor: colors.white,
-              monthTextColor: colors.white,
-              dayTextColor: colors.white,
-              arrowColor: colors.white,
-              todayTextColor: colors.white,
-            }}
-          />
+          {this.renderCalendar()}
         </Animated.View>
       </View>
     );
   }
 }
-
-// const HEADER_MAX_HEIGHT = 305;
-// const HEADER_MIN_HEIGHT = 60;
-// const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
 const styles1 = {
   header: {
