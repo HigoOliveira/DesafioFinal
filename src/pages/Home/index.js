@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 /* Presentational */
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, ScrollView, Animated } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 
 import IconMaterial from 'react-native-vector-icons/MaterialIcons';
@@ -19,6 +19,10 @@ import styles from './styles';
 /* Component */
 import Modal from './components/Modal';
 import EventList from './components/EventList';
+
+const HEADER_MIN_HEIGHT = 45;
+let HEADER_MAX_HEIGHT = 0;
+let HEADER_SCROLL_DISTANCE = 0;
 
 class Home extends Component {
   static propTypes = {
@@ -38,14 +42,14 @@ class Home extends Component {
       </TouchableOpacity>
     ),
     headerRight: (
-      <TouchableOpacity onPress={() => { navigation.navigate({ routeName: 'Profile' })}} style={styles.headerRight} >
+      <TouchableOpacity onPress={() => { navigation.navigate({ routeName: 'Profile' }); }} style={styles.headerRight} >
         <IconAwesome name="user" size={22} color={colors.white} />
       </TouchableOpacity>
     ),
   });
-
   state = {
     showModal: false,
+    scrollY: new Animated.Value(0),
   }
 
   componentDidMount() {
@@ -56,30 +60,79 @@ class Home extends Component {
     this.setState({ showModal: true });
   }
 
+  _getComponentDimensions = (event) => {
+    if (!HEADER_MAX_HEIGHT) {
+      HEADER_MAX_HEIGHT = event.nativeEvent.layout.height;
+      HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
+      this.forceUpdate();
+    }
+  }
+
   render() {
+    let headerHeight;
+    if (!HEADER_MAX_HEIGHT) {
+      headerHeight = 'auto';
+    } else {
+      headerHeight = this.state.scrollY.interpolate({
+        inputRange: [0, HEADER_SCROLL_DISTANCE],
+        outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
+        extrapolate: 'clamp',
+      });
+    }
+
+
     return (
       <View style={styles.container}>
-        <Calendar
-          theme={{
-            backgroundColor: colors.primaryDarker,
-            calendarBackground: colors.primaryDarker,
-            selectedDayBackgroundColor: colors.secondary,
-            selectedDayTextColor: colors.white,
-            textDisabledColor: colors.white,
-            monthTextColor: colors.white,
-            dayTextColor: colors.white,
-            arrowColor: colors.white,
-            todayTextColor: colors.white,
-          }}
-        />
         <Modal
           visible={this.state.showModal}
           onCloseModal={() => this.setState({ showModal: false })}
         />
-        <EventList />
+        {/* <EventList /> */}
+        <ScrollView
+          style={{ flex: 1 }}
+          scrollEventThrottle={16}
+          onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])}
+        >
+          <View style={{marginTop: HEADER_MAX_HEIGHT}}>
+            <EventList />
+          </View>
+        </ScrollView>
+        <Animated.View style={[styles1.header, { height: headerHeight }]} onLayout={event => this._getComponentDimensions(event)}>
+          <Calendar
+            theme={{
+              backgroundColor: colors.primaryDarker,
+              calendarBackground: colors.primaryDarker,
+              selectedDayBackgroundColor: colors.secondary,
+              selectedDayTextColor: colors.white,
+              textDisabledColor: colors.white,
+              monthTextColor: colors.white,
+              dayTextColor: colors.white,
+              arrowColor: colors.white,
+              todayTextColor: colors.white,
+            }}
+          />
+        </Animated.View>
       </View>
     );
   }
 }
+
+// const HEADER_MAX_HEIGHT = 305;
+// const HEADER_MIN_HEIGHT = 60;
+// const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
+
+const styles1 = {
+  header: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: '#03A9F4',
+    overflow: 'hidden',
+  },
+  scrollViewContent: {
+    marginTop: HEADER_MAX_HEIGHT,
+  },
+};
 
 export default connect()(Home);

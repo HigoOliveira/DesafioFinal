@@ -12,12 +12,9 @@ import EventItem from './components/EventItem';
 import styles from './styles';
 
 const EventList = ({ events }) => (
-  <FlatList
-    style={styles.container}
-    contentContainerStyle={styles.content}
-    data={events}
-    renderItem={(event) => <EventItem event={event} />}
-  />
+  <React.Fragment>
+    {events.map(event => <EventItem event={event} />)}
+  </React.Fragment>
 );
 
 const mapStateToProps = state => ({
