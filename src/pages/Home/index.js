@@ -76,9 +76,18 @@ class Home extends Component {
     }
   }
 
+  changedDate = (date) => {
+    this.setState({ currentDate: date });
+  }
+
   renderCalendar = () => {
     if (this.state.semana) {
-      return <DayCalendar currentDay={this.state.currentDate} />;
+      return (
+        <DayCalendar
+          currentDay={this.state.currentDate}
+          onChangeDate={this.changedDate}
+        />
+      );
     }
     return (
       <Calendar

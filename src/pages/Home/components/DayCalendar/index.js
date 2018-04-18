@@ -22,12 +22,14 @@ class DayCalendar extends Component {
 
   pressRight = () => {
     this.state.day.add(1, 'days');
+    this.props.onChangeDate(this.state.day.format('YYYY-MM-DD'));
     this.forceUpdate();
   }
 
   pressLeft = () => {
     this.state.day.subtract(1, 'days');
     this.forceUpdate();
+    this.props.onChangeDate(this.state.day.format('YYYY-MM-DD'));
   }
 
 
