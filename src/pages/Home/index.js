@@ -2,6 +2,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import moment from 'moment';
+
 /* Redux */
 import { connect } from 'react-redux';
 
@@ -76,7 +78,7 @@ class Home extends Component {
 
   renderCalendar = () => {
     if (this.state.semana) {
-      return <DayCalendar />;
+      return <DayCalendar currentDay={this.state.currentDate} />;
     }
     return (
       <Calendar
@@ -91,6 +93,10 @@ class Home extends Component {
           arrowColor: colors.white,
           todayTextColor: colors.white,
         }}
+        markedDates={{
+          [this.state.currentDate || moment().format('YYYY-MM-DD')]: { selected: true },
+        }}
+        onDayPress={(day) => { this.setState({ currentDate: day.dateString }); }}
       />
     );
   }
