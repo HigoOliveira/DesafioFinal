@@ -4,10 +4,10 @@ import { shallow } from 'enzyme';
 
 /* Presentational */
 import EventList from 'pages/Home/components/EventList';
+import { Text } from 'react-native';
 
 /* redux */
 import configureStore from 'redux-mock-store';
-import ActionCreators from 'store/ducks/user';
 
 const mockStore = configureStore([]);
 
@@ -49,7 +49,7 @@ describe('EventList', () => {
   });
 
   it('Shows empty message if there aren\'t event.', () => {
-
+    const wrapper = shallow(<EventList currentDate="2017-04-19" />, { context: { store } }).dive();
+    expect(wrapper.find(Text).props().children).toEqual('Não possui eventos para esse dia.');
   });
-
 });
