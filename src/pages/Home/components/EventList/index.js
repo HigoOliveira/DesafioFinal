@@ -21,7 +21,7 @@ const EventList = ({ events, currentDate }) => {
     <React.Fragment>
       {
         eventsFiltered.length >= 1
-        ? eventsFiltered.map(event => <EventItem event={event} />)
+        ? eventsFiltered.map(event => <EventItem key={event.name} event={event} />)
         : <View style={styles.container}><Text style={styles.text}>Não possui eventos para esse dia.</Text></View>
       }
     </React.Fragment>

@@ -36,14 +36,15 @@ describe('Testing event reducer', () => {
   // });
 
   it('Can login', () => {
-    const state = getReducer(ActionCreators.userLogin(cellphone, password));
+    const initialState = getReducer(ActionCreators.userSuccessGetInformation(data));
+    const state = reducer(initialState, ActionCreators.userLogin(cellphone, password));
     expect(state.cellphone).toBe(cellphone);
   });
 
   it('Login were a success', () => {
     const state = getReducer(ActionCreators.userLoginSuccess());
 
-    expect(state.loading).toBe(true);
+    expect(state.loading).toBe(false);
     expect(state.isLoggedIn).toBe(true);
   });
 });
