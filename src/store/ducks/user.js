@@ -30,7 +30,7 @@ export const INITIAL_STATE = {
 export const getUserInformation = state => ({ ...state, loading: true });
 export const successGetInformation = (state, action) => ({
   ...state,
-  cellphone: action.data.phone,
+  cellphone: action.data.cellphone,
   name: action.data.name,
   loading: false,
 });
