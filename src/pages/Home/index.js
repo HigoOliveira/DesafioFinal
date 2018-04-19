@@ -135,6 +135,7 @@ class Home extends Component {
           style={styles.scrollMain}
           scrollEventThrottle={16}
           onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])}
+          contentContainerStyle={styles.scrollContent}
         >
           <View style={{ marginTop: HEADER_MAX_HEIGHT }}>
             <EventList currentDate={this.state.currentDate} />

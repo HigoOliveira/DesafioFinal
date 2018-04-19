@@ -7,7 +7,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     borderRadius: metrics.radius,
     padding: metrics.padding,
-    margin: metrics.margin,
+    marginHorizontal: metrics.margin,
+    marginVertical: 10,
     flexDirection: 'row',
   },
   mainContainer: {

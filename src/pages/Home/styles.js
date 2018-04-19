@@ -34,6 +34,9 @@ const styles = StyleSheet.create({
   scrollMain: {
     flex: 1,
   },
+  scrollContent: {
+    paddingVertical: 10,
+  },
 });
 
 export default styles;
