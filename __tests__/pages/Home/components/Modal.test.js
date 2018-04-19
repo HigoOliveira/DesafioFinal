@@ -27,7 +27,7 @@ const initialStore = {
 
 const name = 'Aprendendo GoNative';
 const where = 'Viçosa, Minas Gerais';
-const datetime = new Date();
+const datetime = '2019-04-19 16:35';
 
 describe('Modal', () => {
   const store = mockStore(initialStore);
@@ -37,7 +37,7 @@ describe('Modal', () => {
   function createWrapper() {
     const onCloseModal = jest.fn();
     return shallow(
-      <Modal onCloseModal={onCloseModal} />,
+      <Modal onCloseModal={onCloseModal} visible />,
       { context: { store } },
     );
   }
@@ -100,5 +100,4 @@ describe('Modal', () => {
     wrapper.find(Button).simulate('press');
     expect(store.getActions()).toContainEqual(ActionCreators.eventAddNew(datetime, name, where));
   });
-
 });

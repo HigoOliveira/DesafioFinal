@@ -16,7 +16,7 @@ export default class Input extends Component {
     value: PropTypes.string,
     onChangeText: PropTypes.func,
     placeholder: PropTypes.string,
-    icon: PropTypes.string.isRequired,
+    icon: PropTypes.string,
     type: PropTypes.string.isRequired,
     editable: PropTypes.bool,
     secondary: PropTypes.bool,
@@ -26,6 +26,7 @@ export default class Input extends Component {
   static defaultProps = {
     placeholder: '',
     value: '',
+    icon: '',
     secureTextEntry: false,
     editable: true,
     secondary: false,
@@ -37,9 +38,26 @@ export default class Input extends Component {
     this.input = null;
   }
 
-  render() {
+  renderIcon = () => {
     const {
       icon,
+      secondary,
+    } = this.props;
+
+    return icon !== ''
+      ? (
+        <Icon
+          name={icon}
+          size={20}
+          color={secondary ? colors.dustyGrey : colors.white}
+          style={styles.icon}
+        />
+      )
+      : null;
+  }
+
+  render() {
+    const {
       value,
       type,
       placeholder,
@@ -53,12 +71,7 @@ export default class Input extends Component {
 
     return (
       <View style={[styles.container, secondary ? { backgroundColor: colors.gallery } : null]} >
-        <Icon
-          name={icon}
-          size={20}
-          color={secondary ? colors.dustyGrey : colors.white}
-          style={styles.icon}
-        />
+        {this.renderIcon()}
         <InputText
           ref={(ref) => { this.input = ref; }}
           type={type}

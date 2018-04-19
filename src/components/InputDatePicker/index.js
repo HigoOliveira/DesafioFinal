@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 import { View } from 'react-native';
 
@@ -21,7 +22,7 @@ export default class InputDatePicker extends Component {
 
   static defaultProps = {
     placeholder: '',
-    value: null,
+    value: '',
     secondary: true,
   };
 
