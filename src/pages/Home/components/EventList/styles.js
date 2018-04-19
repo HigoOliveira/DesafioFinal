@@ -1,12 +1,16 @@
 import { StyleSheet } from 'react-native';
-import { metrics } from 'styles';
+import { metrics, colors, fonts } from 'styles';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: metrics.padding,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  content: {
-    // padding: metrics.padding,
+  text: {
+    color: colors.white,
+    fontSize: fonts.regular,
   },
 });
 

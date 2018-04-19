@@ -132,7 +132,7 @@ class Home extends Component {
         />
         {/* <EventList /> */}
         <ScrollView
-          style={{ flex: 1 }}
+          style={styles.scrollMain}
           scrollEventThrottle={16}
           onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])}
         >
@@ -140,7 +140,7 @@ class Home extends Component {
             <EventList currentDate={this.state.currentDate} />
           </View>
         </ScrollView>
-        <Animated.View style={[styles1.header, { height: headerHeight }]} onLayout={event => this._getComponentDimensions(event)}>
+        <Animated.View style={[styles.header, { height: headerHeight }]} onLayout={event => this._getComponentDimensions(event)}>
           {this.renderCalendar()}
         </Animated.View>
       </View>
@@ -148,18 +148,6 @@ class Home extends Component {
   }
 }
 
-const styles1 = {
-  header: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: '#03A9F4',
-    overflow: 'hidden',
-  },
-  scrollViewContent: {
-    marginTop: HEADER_MAX_HEIGHT,
-  },
-};
+
 
 export default connect()(Home);

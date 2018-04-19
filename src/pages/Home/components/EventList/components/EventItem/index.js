@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 
 import { View, TouchableOpacity, Text } from 'react-native';
 
@@ -60,7 +61,7 @@ const EventItem = ({ event }) => (
         <Text style={styles.where}>{event.where}</Text>
       </View>
       <View>
-        <Text style={styles.datetime}>9h</Text>
+        <Text style={styles.datetime}>{moment(event.datetime).format('HH[h] mm[m]')}</Text>
       </View>
     </View>
   </Swipeout>
