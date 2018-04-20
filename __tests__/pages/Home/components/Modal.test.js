@@ -13,6 +13,7 @@ import Alert from 'components/Alert';
 import Button from 'components/Button';
 import Input from 'components/Input';
 import InputDatePicker from 'components/InputDatePicker';
+import { TouchableOpacity } from 'react-native';
 
 /* Redux */
 import configureStore from 'redux-mock-store';
@@ -33,9 +34,10 @@ describe('Modal', () => {
   const store = mockStore(initialStore);
   let wrapper;
   let alert;
+  let onCloseModal;
 
   function createWrapper() {
-    const onCloseModal = jest.fn();
+    onCloseModal = jest.fn();
     return shallow(
       <Modal onCloseModal={onCloseModal} visible />,
       { context: { store } },
@@ -91,7 +93,7 @@ describe('Modal', () => {
     sameTestToCantAdd();
   });
 
-  it('Can add event when every fields is fill', () => {
+  it('Can add event when every fields is fill and close modal', () => {
     wrapper.setState({
       datetime,
       name,
@@ -99,5 +101,17 @@ describe('Modal', () => {
     });
     wrapper.find(Button).simulate('press');
     expect(store.getActions()).toContainEqual(ActionCreators.eventAddNew(datetime, name, where));
+    expect(onCloseModal).toHaveBeenCalledTimes(1);
+  });
+
+  it('Clean the fields when cancel', () => {
+    wrapper.setState({
+      datetime,
+      name,
+      where,
+    });
+    wrapper.find(TouchableOpacity).simulate('press');
+    expect(wrapper.state()).toEqual({ datetime: '', name: '', where: '' });
+    expect(onCloseModal).toHaveBeenCalledTimes(1);
   });
 });

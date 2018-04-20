@@ -34,8 +34,8 @@ class Modal extends Component {
   }
 
   closeModal = () => {
+    this.setState({ datetime: '', name: '', where: '' });
     this.props.onCloseModal();
-    this.setState({ datetime: '' });
   };
 
   saveEvent = () => {
