@@ -6,7 +6,7 @@ describe('Testing event reducer', () => {
   const password = 'higo1234';
 
   const data = {
-    cellphone,
+    phone: cellphone,
     name,
   };
 

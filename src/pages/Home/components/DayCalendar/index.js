@@ -1,24 +1,34 @@
 /* Core */
 import React, { Component } from 'react';
-
+import PropTypes from 'prop-types';
+/* Time Operations */
 import moment from 'moment';
 
 /* Presentational */
 import { View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
 import { colors } from 'styles';
 
 import styles from './styles';
 
 class DayCalendar extends Component {
+  static propTypes = {
+    currentDay: PropTypes.string.isRequired,
+    onChangeDate: PropTypes.func,
+  }
+
+  static defaultProps = {
+    onChangeDate: (date) => {},
+  }
+
   constructor(props) {
     super(props);
     console.tron.log(props);
     this.state = {
-      day: props.currentDay && moment(props.currentDay) || moment(),
+      day: (props.currentDay && moment(props.currentDay)) || moment(),
     };
   }
+
 
   pressRight = () => {
     this.state.day.add(1, 'days');

@@ -20,3 +20,31 @@ export function* login(action) {
     yield put(ActionCreators.userLoginSuccess());
   }
 }
+
+export function* signUp(action) {
+  const response = yield call(api.post, '/api/signup', {
+    phone: action.cellphone,
+    name: action.name,
+    password: action.password,
+  });
+  if (response.ok) {
+    yield put(ActionCreators.userSignUpSuccess());
+    yield put(NavigationActions.navigate({ routeName: 'SignIn' }));
+  }
+}
+
+export function* updateInformation(action) {
+  const response = yield call(api.post, '/api/user/update', {
+    name: action.name,
+    password: action.password,
+    password_confirm: action.passwordConfirm,
+  }, {
+    headers: {
+      Authorization: 'Token c2eaade8b728cf88be7e63cc5fb6c6859b97dcc4',
+    },
+  });
+
+  if (response.ok) {
+    yield put(ActionCreators.userUpdateInformationSuccess(action.name));
+  }
+}

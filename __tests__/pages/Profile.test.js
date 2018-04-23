@@ -26,7 +26,6 @@ const initialStore = {
   },
 };
 
-const cellphone = '+559999999999';
 const name = 'Higo de Oliveira Ribeiro';
 
 
@@ -79,5 +78,14 @@ describe('Profile', () => {
     wrapper.find(Button).simulate('press');
     expect(store.getActions()).toEqual([]);
     expect(Alert.alert.calledOnce).toBe(true);
+  });
+
+  it('Can update password when it\'s confirmed', () => {
+    wrapper.setState({
+      password: 'newpass',
+      confirmPassword: 'newpass',
+    });
+    wrapper.find(Button).simulate('press');
+    expect(store.getActions()).toContainEqual(ActionCreators.userUpdateInformation('', 'newpass', 'newpass'));
   });
 });

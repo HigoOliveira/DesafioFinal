@@ -5,12 +5,19 @@ import { createReducer, createActions } from 'reduxsauce';
 const { Types, Creators } = createActions({
   userGetInformation: ['cellphone'],
   userSuccessGetInformation: ['data'],
+
   userDoesExist: ['cellphone'],
-  userSignUp: null,
+
+  userSignUp: ['cellphone', 'name', 'password'],
+  userSignUpSuccess: ['cellphone'],
+
   userLogin: ['username', 'password'],
   userLoginSuccess: null,
+
   userLogout: null,
-  userUpdateInformation: ['name', 'password', 'confirmPassword'],
+
+  userUpdateInformation: ['name', 'password', 'passwordConfirm'],
+  userUpdateInformationSuccess: ['name'],
 });
 
 export { Types };
@@ -30,7 +37,7 @@ export const INITIAL_STATE = {
 export const getUserInformation = state => ({ ...state, loading: true });
 export const successGetInformation = (state, action) => ({
   ...state,
-  cellphone: action.data.cellphone,
+  cellphone: action.data.phone,
   name: action.data.name,
   loading: false,
 });
@@ -41,7 +48,13 @@ export const doesExist = (state, action) => ({
   loading: false,
 });
 
-export const signUp = state => ({ ...state, loading: true });
+export const signUp = (state, action) => ({
+  ...state,
+  cellphone: action.cellphone,
+  loading: true,
+});
+export const signUpSuccess = state => ({ ...state, loading: false });
+
 export const login = state => state;
 export const loginSuccess = state => ({
   ...state,
@@ -56,6 +69,12 @@ export const updateInformation = state => ({
   updating: true,
 });
 
+export const updateInformationSuccess = (state, action) => ({
+  ...state,
+  name: action.name,
+  updating: false,
+});
+
 /* Reducers to types */
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.USER_GET_INFORMATION]: getUserInformation,
@@ -66,4 +85,5 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.USER_LOGIN_SUCCESS]: loginSuccess,
   [Types.USER_LOGOUT]: logout,
   [Types.USER_UPDATE_INFORMATION]: updateInformation,
+  [Types.USER_UPDATE_INFORMATION_SUCCESS]: updateInformationSuccess,
 });

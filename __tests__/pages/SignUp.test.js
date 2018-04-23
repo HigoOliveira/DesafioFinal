@@ -61,7 +61,7 @@ describe('Testing SignUp Page', () => {
       password,
     });
     wrapper.find('#signup').simulate('press');
-    expect(store.getActions()).toContainEqual(ActionCreators.userSignUp());
+    expect(store.getActions()).toContainEqual(ActionCreators.userSignUp(cellphone, name, password));
   });
 
   it('Can\'t sign up if informations is valid', () => {

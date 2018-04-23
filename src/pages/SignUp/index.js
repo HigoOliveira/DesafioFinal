@@ -29,7 +29,7 @@ class SignUp extends Component {
     const { cellphone } = this.props;
     const { name, password } = this.state;
     if (cellphone && name && password) {
-      this.props.signUp();
+      this.props.signUp(cellphone, name, password);
     } else {
       Alert.alert('Por favor entre com dados válidos para poder registrar.');
     }
@@ -78,7 +78,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  signUp: () => dispatch(ActionCreators.userSignUp()),
+  signUp: (cellphone, name, password) => dispatch(ActionCreators.userSignUp(cellphone, name, password)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

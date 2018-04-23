@@ -32,6 +32,7 @@ describe('Testing User Saga', () => {
     await sagaTester.waitFor(ActionCreators.userSuccessGetInformation().type);
     await sagaTester.waitFor(NavigationActions.navigate({ routeName: 'SignIn' }).type);
 
+    expect(sagaTester.wasCalled(ActionCreators.userSuccessGetInformation().type)).toBe(true);
     expect(sagaTester.getLatestCalledAction()).toEqual(NavigationActions.navigate({ routeName: 'SignIn' }));
   });
 
@@ -43,6 +44,7 @@ describe('Testing User Saga', () => {
     await sagaTester.waitFor(ActionCreators.userDoesExist().type);
     await sagaTester.waitFor(NavigationActions.navigate({ routeName: 'SignIn' }).type);
 
+    expect(sagaTester.wasCalled(ActionCreators.userDoesExist().type)).toBe(true);
     expect(sagaTester.getLatestCalledAction()).toEqual(NavigationActions.navigate({ routeName: 'SignUp' }));
   });
 
@@ -54,5 +56,24 @@ describe('Testing User Saga', () => {
     await sagaTester.waitFor(ActionCreators.userLoginSuccess().type);
 
     expect(sagaTester.getLatestCalledAction()).toEqual(ActionCreators.userLoginSuccess());
+  });
+
+  it('User signup valid', async () => {
+    apiMock.onPost('/api/signup')
+      .reply(200);
+
+    sagaTester.dispatch(ActionCreators.userSignUp('+559999999999', 'Higo de Oliveira Ribeiro', 'senha1234'));
+    await sagaTester.waitFor(ActionCreators.userSignUpSuccess().type);
+    expect(sagaTester.getLatestCalledAction()).toEqual(NavigationActions.navigate({ routeName: 'SignIn' }));
+    expect(sagaTester.wasCalled(NavigationActions.navigate({ routeName: 'SignIn' }).type)).toBe(true);
+  });
+
+  it('Update user', async () => {
+    apiMock.onPost('/api/user/update')
+      .reply(200);
+
+    sagaTester.dispatch(ActionCreators.userUpdateInformation('Higo Ribeiro', 'newpass', 'newpass'));
+    await sagaTester.waitFor(ActionCreators.userUpdateInformationSuccess().type);
+    expect(sagaTester.getLatestCalledAction()).toEqual(ActionCreators.userUpdateInformationSuccess('Higo Ribeiro'));
   });
 });
