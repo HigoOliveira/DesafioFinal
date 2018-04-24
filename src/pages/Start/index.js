@@ -17,6 +17,7 @@ import styles from './styles';
 class Start extends Component {
   static propTypes = {
     getInformation: PropTypes.func.isRequired,
+    loading: PropTypes.bool.isRequired,
   };
 
   state = {
@@ -44,14 +45,18 @@ class Start extends Component {
           placeholder="Seu número de telefone"
           ref={(ref) => { this.input = ref; }}
         />
-        <Button title="Entrar" onPress={this.validation} />
+        <Button title="Entrar" onPress={this.validation} loading={this.props.loading} />
       </View>
     );
   }
 }
 
+const mapStateToProps = state => ({
+  loading: state.user.loading,
+});
+
 const mapDispatchToProps = dispatch => ({
   getInformation: cellphone => dispatch(UserActions.userGetInformation(cellphone)),
 });
 
-export default connect(null, mapDispatchToProps)(Start);
+export default connect(mapStateToProps, mapDispatchToProps)(Start);

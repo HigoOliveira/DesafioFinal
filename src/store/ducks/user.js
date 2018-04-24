@@ -12,7 +12,8 @@ const { Types, Creators } = createActions({
   userSignUpSuccess: ['cellphone'],
 
   userLogin: ['username', 'password'],
-  userLoginSuccess: null,
+  userLoginSuccess: ['token'],
+  userLoginError: ['msg'],
 
   userLogout: null,
 
@@ -30,6 +31,8 @@ export const INITIAL_STATE = {
   cellphone: '',
   name: '',
   isLoggedIn: false,
+  msg: '',
+  token: '',
 };
 
 /* Reducers */
@@ -55,24 +58,30 @@ export const signUp = (state, action) => ({
 });
 export const signUpSuccess = state => ({ ...state, loading: false });
 
-export const login = state => state;
-export const loginSuccess = state => ({
+export const login = state => ({ ...state, loading: true });
+export const loginSuccess = (state, action) => ({
   ...state,
+  token: action.token,
   loading: false,
   isLoggedIn: true,
+});
+export const loginError = (state, action) => ({
+  ...state,
+  loading: false,
+  msg: action.msg,
 });
 
 export const logout = () => INITIAL_STATE;
 
 export const updateInformation = state => ({
   ...state,
-  updating: true,
+  loading: true,
 });
 
 export const updateInformationSuccess = (state, action) => ({
   ...state,
   name: action.name,
-  updating: false,
+  loading: false,
 });
 
 /* Reducers to types */
@@ -83,6 +92,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.USER_SIGN_UP]: signUp,
   [Types.USER_LOGIN]: login,
   [Types.USER_LOGIN_SUCCESS]: loginSuccess,
+  [Types.USER_LOGIN_ERROR]: loginError,
   [Types.USER_LOGOUT]: logout,
   [Types.USER_UPDATE_INFORMATION]: updateInformation,
   [Types.USER_UPDATE_INFORMATION_SUCCESS]: updateInformationSuccess,

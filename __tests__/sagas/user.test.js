@@ -17,7 +17,11 @@ describe('Testing User Saga', () => {
 
   beforeEach(() => {
     sagaTester = new SagaTester({
-      initialState: {},
+      initialState: {
+        user: {
+          token: '',
+        },
+      },
     });
     apiMock = new MockAdapter(api.axiosInstance);
 
@@ -49,13 +53,27 @@ describe('Testing User Saga', () => {
   });
 
   it('User login valid access', async () => {
+    const response = userFixture['/api/auth'];
     apiMock.onPost('/api/auth')
-      .reply(200, userFixture['/api/auth']);
+      .reply(200, response);
     sagaTester.dispatch(ActionCreators.userLogin('+559999999999', 'senha'));
 
     await sagaTester.waitFor(ActionCreators.userLoginSuccess().type);
 
-    expect(sagaTester.getLatestCalledAction()).toEqual(ActionCreators.userLoginSuccess());
+    expect(sagaTester.getLatestCalledAction())
+      .toEqual(ActionCreators.userLoginSuccess(response.token));
+  });
+
+  it('User login invalid access', async () => {
+    const response = userFixture['/api/auth'];
+    apiMock.onPost('/api/auth')
+      .reply(400, response);
+    sagaTester.dispatch(ActionCreators.userLogin('+559999999999', 'senha'));
+
+    await sagaTester.waitFor(ActionCreators.userLoginError().type);
+
+    expect(sagaTester.getLatestCalledAction())
+      .toEqual(ActionCreators.userLoginError(response.non_field_errors[0]));
   });
 
   it('User signup valid', async () => {
@@ -69,8 +87,11 @@ describe('Testing User Saga', () => {
   });
 
   it('Update user', async () => {
+    const token = 'umtokenvalido';
     apiMock.onPost('/api/user/update')
       .reply(200);
+
+    sagaTester.dispatch(ActionCreators.userLoginSuccess(token));
 
     sagaTester.dispatch(ActionCreators.userUpdateInformation('Higo Ribeiro', 'newpass', 'newpass'));
     await sagaTester.waitFor(ActionCreators.userUpdateInformationSuccess().type);

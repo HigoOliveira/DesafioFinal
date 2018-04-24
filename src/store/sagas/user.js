@@ -1,5 +1,5 @@
 import api from 'services/api';
-import { call, put } from 'redux-saga/effects';
+import { call, put, select } from 'redux-saga/effects';
 import { NavigationActions } from 'react-navigation';
 import ActionCreators from 'store/ducks/user';
 
@@ -17,7 +17,9 @@ export function* getUserInformation(action) {
 export function* login(action) {
   const response = yield call(api.post, '/api/auth', { username: action.username, password: action.password });
   if (response.ok) {
-    yield put(ActionCreators.userLoginSuccess());
+    yield put(ActionCreators.userLoginSuccess(response.data.token));
+  } else {
+    yield put(ActionCreators.userLoginError(response.data.non_field_errors[0]));
   }
 }
 
@@ -34,13 +36,14 @@ export function* signUp(action) {
 }
 
 export function* updateInformation(action) {
+  const { token } = yield select(state => state.user);
   const response = yield call(api.post, '/api/user/update', {
     name: action.name,
     password: action.password,
     password_confirm: action.passwordConfirm,
   }, {
     headers: {
-      Authorization: 'Token c2eaade8b728cf88be7e63cc5fb6c6859b97dcc4',
+      Authorization: `Token ${token}`,
     },
   });
 

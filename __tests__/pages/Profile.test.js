@@ -23,6 +23,7 @@ const initialStore = {
   user: {
     cellphone: '99999999999',
     name: 'Higo de Oliveira Ribeiro',
+    loading: false,
   },
 };
 

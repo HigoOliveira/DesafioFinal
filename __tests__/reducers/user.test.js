@@ -42,9 +42,23 @@ describe('Testing event reducer', () => {
   });
 
   it('Login were a success', () => {
-    const state = getReducer(ActionCreators.userLoginSuccess());
+    const token = 'meutoken';
+    const state = getReducer(ActionCreators.userLoginSuccess(token));
 
     expect(state.loading).toBe(false);
     expect(state.isLoggedIn).toBe(true);
+    expect(state.token).toEqual(token);
+
+  });
+
+  it('Login error', () => {
+    const msg = 'Impossível fazer login com as credenciais fornecidas.';
+
+    const initialState = getReducer(ActionCreators.userSuccessGetInformation(data));
+
+    const state = reducer(initialState, ActionCreators.userLoginError(msg));
+    expect(state.loading).toBe(false);
+    expect(state.cellphone).toEqual(cellphone);
+    expect(state.msg).toEqual(msg);
   });
 });

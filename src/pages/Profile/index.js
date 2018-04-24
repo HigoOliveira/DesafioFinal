@@ -26,6 +26,7 @@ class Profile extends Component {
     }).isRequired,
     logout: PropTypes.func.isRequired,
     updateInformation: PropTypes.func.isRequired,
+    loading: PropTypes.bool.isRequired,
   };
   static navigationOptions = ({ navigation }) => ({
     title: 'SCHEDULE',
@@ -85,12 +86,20 @@ class Profile extends Component {
             placeholder="Confirme a senha digitada"
             secureTextEntry
           />
-          <Button title="Alterar informações" onPress={this.update} />
+          <Button
+            title="Alterar informações"
+            onPress={this.update}
+            loading={this.props.loading}
+          />
         </View>
       </View>
     );
   }
 }
+
+const mapSTateToProps = state => ({
+  loading: state.user.loading,
+});
 
 const mapDispatchToProps = dispatch => ({
   logout: () => dispatch(ActionCreators.userLogout()),
@@ -98,4 +107,4 @@ const mapDispatchToProps = dispatch => ({
     dispatch(ActionCreators.userUpdateInformation(name, password, confirmPassword)),
 });
 
-export default connect(null, mapDispatchToProps)(Profile);
+export default connect(mapSTateToProps, mapDispatchToProps)(Profile);

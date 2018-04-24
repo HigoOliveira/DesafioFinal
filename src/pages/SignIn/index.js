@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import ActionCreators from 'store/ducks/user';
 
 /* Presentational */
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import Alert from 'components/Alert';
 import Input from 'components/Input';
 import Button from 'components/Button';
@@ -18,6 +18,8 @@ class SignIn extends Component {
   propTypes = {
     login: PropTypes.func.isRequired,
     cellphone: PropTypes.string.isRequired,
+    loading: PropTypes.bool.isRequired,
+    msg: PropTypes.string.isRequired,
   }
   state = {
     password: '',
@@ -37,6 +39,7 @@ class SignIn extends Component {
     const { cellphone } = this.props;
     return cellphone.substring(3);
   }
+
 
   render() {
     return (
@@ -58,7 +61,11 @@ class SignIn extends Component {
           secureTextEntry
           ref={(ref) => { this.input = ref; }}
         />
-        <Button title="Entrar" onPress={this.validation} />
+        <Button
+          title="Entrar"
+          onPress={this.validation}
+          loading={this.props.loading}
+        />
       </View>
     );
   }
@@ -66,6 +73,8 @@ class SignIn extends Component {
 
 const mapStateToProps = state => ({
   cellphone: state.user.cellphone,
+  loading: state.user.loading,
+  msg: state.user.msg,
 });
 
 const mapDispatchToProps = dispatch => ({
