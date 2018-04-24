@@ -7,10 +7,11 @@ import { connect } from 'react-redux';
 import ActionCreators from 'store/ducks/user';
 
 /* Presentational */
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import Alert from 'components/Alert';
 import Input from 'components/Input';
 import Button from 'components/Button';
+import Message from 'components/Message';
 
 import styles from './styles';
 
@@ -40,10 +41,19 @@ class SignIn extends Component {
     return cellphone.substring(3);
   }
 
+  renderMessage = () => {
+    if (this.props.msg) {
+      return (
+        <Message text={this.props.msg} />
+      );
+    }
+    return null;
+  }
 
   render() {
     return (
       <View style={styles.container}>
+        {this.renderMessage()}
         <Input
           value={this.number()}
           type="cel-phone"

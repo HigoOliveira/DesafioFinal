@@ -11,6 +11,7 @@ import { View } from 'react-native';
 import Alert from 'components/Alert';
 import Button from 'components/Button';
 import Input from 'components/Input';
+import Message from 'components/Message';
 
 import styles from './styles';
 
@@ -34,9 +35,19 @@ class Start extends Component {
     }
   }
 
+  renderMessage = () => {
+    if (this.props.msg) {
+      return (
+        <Message text={this.props.msg} />
+      );
+    }
+    return null;
+  }
+
   render() {
     return (
       <View style={styles.container}>
+        {this.renderMessage()}
         <Input
           onChangeText={(cellphone) => { this.setState({ cellphone }); }}
           value={this.state.cellphone}
@@ -53,6 +64,7 @@ class Start extends Component {
 
 const mapStateToProps = state => ({
   loading: state.user.loading,
+  msg: state.user.msg,
 });
 
 const mapDispatchToProps = dispatch => ({
