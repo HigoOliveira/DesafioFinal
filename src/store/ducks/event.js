@@ -5,6 +5,8 @@ import { Types as UserTypes } from './user';
 const { Types, Creators } = createActions({
   eventAddNew: ['id', 'datetime', 'name', 'where'],
   eventAddNewSuccess: ['oldId', 'newId'],
+  eventLoad: null,
+  eventLoadSuccess: ['list'],
 });
 
 export { Types };
@@ -13,6 +15,7 @@ export default Creators;
 /* Initial State */
 export const INITIAL_STATE = {
   list: [],
+  loading: false,
 };
 
 /* Reducers */
@@ -35,6 +38,17 @@ export const addNewSuccess = (state, action) => ({
     (action.oldId === event.id ? { ...event, id: action.newId } : event)),
 });
 
+export const load = state => ({
+  ...state,
+  loading: true,
+});
+
+export const loadSuccess = (state, action) => ({
+  ...state,
+  list: action.list,
+  loading: false,
+});
+
 export const cleanState = () => ({
   list: [],
 });
@@ -43,5 +57,8 @@ export const cleanState = () => ({
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.EVENT_ADD_NEW]: addNew,
   [Types.EVENT_ADD_NEW_SUCCESS]: addNewSuccess,
+  [Types.EVENT_LOAD]: load,
+  [Types.EVENT_LOAD_SUCCESS]: loadSuccess,
+
   [UserTypes.USER_LOGOUT]: cleanState,
 });

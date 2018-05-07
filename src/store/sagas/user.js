@@ -2,6 +2,7 @@ import api from 'services/api';
 import { call, put, select } from 'redux-saga/effects';
 import { NavigationActions } from 'react-navigation';
 import ActionCreators from 'store/ducks/user';
+import EventActions from 'store/ducks/event';
 
 export function* getUserInformation(action) {
   const response = yield call(api.get, `/api/verify-user-exists/${action.cellphone}`);
@@ -18,6 +19,7 @@ export function* login(action) {
   const response = yield call(api.post, '/api/auth', { username: action.username, password: action.password });
   if (response.ok) {
     yield put(ActionCreators.userLoginSuccess(response.data.token));
+    yield put(EventActions.eventLoad());
   } else {
     yield put(ActionCreators.userLoginError(response.data.non_field_errors[0]));
   }

@@ -1,5 +1,13 @@
 {
   "/api/event/create" : {
     "id" : 1
-  }
+  },
+  "/api/event/list" : [
+    {
+      "id": 1,
+      "name": "Um evento qualquer",
+      "where": "Casa",
+      "datetime": "2018-05-07 16:16"
+    }
+  ]
 }

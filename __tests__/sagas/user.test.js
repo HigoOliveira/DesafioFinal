@@ -6,6 +6,7 @@ import rootSaga from 'store/sagas';
 import api from 'services/api';
 
 import ActionCreators from 'store/ducks/user';
+import EventActions from 'store/ducks/event';
 
 import { NavigationActions } from 'react-navigation';
 
@@ -60,8 +61,9 @@ describe('Testing User Saga', () => {
 
     await sagaTester.waitFor(ActionCreators.userLoginSuccess().type);
 
-    expect(sagaTester.getLatestCalledAction())
-      .toEqual(ActionCreators.userLoginSuccess(response.token));
+    expect(sagaTester.getCalledActions())
+      .toContainEqual(ActionCreators.userLoginSuccess(response.token));
+    expect(sagaTester.getCalledActions()).toContainEqual(EventActions.eventLoad());
   });
 
   it('User login invalid access', async () => {

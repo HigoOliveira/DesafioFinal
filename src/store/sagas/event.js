@@ -17,3 +17,16 @@ export function* addEvent(action) {
     yield put(ActionCreators.eventAddNewSuccess(action.id, response.data.id));
   }
 }
+
+export function* loadEvents() {
+  const { token } = yield select(state => state.user);
+  const response = yield call(api.get, '/api/event/list', {
+  }, {
+    headers: {
+      Authorization: `Token ${token}`,
+    },
+  });
+  if (response.ok) {
+    yield put(ActionCreators.eventLoadSuccess(response.data));
+  }
+}
