@@ -43,7 +43,7 @@ class Modal extends Component {
     if (!datetime || !name || !where) {
       Alert.alert('Você precisa preencher todos os campos para poder adicionar um novo evento!');
     } else {
-      this.props.addNew(datetime, name, where);
+      this.props.addNew(Math.random(), datetime, name, where);
       this.closeModal();
     }
   }
@@ -97,7 +97,8 @@ class Modal extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  addNew: (datetime, name, where) => dispatch(ActionCreators.eventAddNew(datetime, name, where)),
+  addNew: (id, datetime, name, where) =>
+    dispatch(ActionCreators.eventAddNew(id, datetime, name, where)),
 });
 
 export default connect(null, mapDispatchToProps)(Modal);

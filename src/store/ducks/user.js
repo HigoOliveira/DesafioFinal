@@ -9,7 +9,7 @@ const { Types, Creators } = createActions({
   userDoesExist: ['cellphone'],
 
   userSignUp: ['cellphone', 'name', 'password'],
-  userSignUpSuccess: ['cellphone'],
+  userSignUpSuccess: ['msg'],
 
   userLogin: ['username', 'password'],
   userLoginSuccess: ['token'],
@@ -56,7 +56,11 @@ export const signUp = (state, action) => ({
   cellphone: action.cellphone,
   loading: true,
 });
-export const signUpSuccess = state => ({ ...state, loading: false });
+export const signUpSuccess = (state, action) => ({
+  ...state,
+  msg: action.msg,
+  loading: false,
+});
 
 export const login = state => ({ ...state, loading: true });
 export const loginSuccess = (state, action) => ({
@@ -90,6 +94,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.USER_SUCCESS_GET_INFORMATION]: successGetInformation,
   [Types.USER_DOES_EXIST]: doesExist,
   [Types.USER_SIGN_UP]: signUp,
+  [Types.USER_SIGN_UP_SUCCESS]: signUpSuccess,
   [Types.USER_LOGIN]: login,
   [Types.USER_LOGIN_SUCCESS]: loginSuccess,
   [Types.USER_LOGIN_ERROR]: loginError,

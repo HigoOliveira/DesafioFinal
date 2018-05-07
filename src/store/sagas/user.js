@@ -30,7 +30,7 @@ export function* signUp(action) {
     password: action.password,
   });
   if (response.ok) {
-    yield put(ActionCreators.userSignUpSuccess());
+    yield put(ActionCreators.userSignUpSuccess('Usuário registrado com sucesso!'));
     yield put(NavigationActions.navigate({ routeName: 'SignIn' }));
   }
 }

@@ -100,7 +100,9 @@ describe('Modal', () => {
       where,
     });
     wrapper.find(Button).simulate('press');
-    expect(store.getActions()).toContainEqual(ActionCreators.eventAddNew(datetime, name, where));
+    const { id } = store.getActions()[0];
+    expect(store.getActions())
+      .toContainEqual(ActionCreators.eventAddNew(id, datetime, name, where));
     expect(onCloseModal).toHaveBeenCalledTimes(1);
   });
 

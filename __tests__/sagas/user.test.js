@@ -84,6 +84,12 @@ describe('Testing User Saga', () => {
     await sagaTester.waitFor(ActionCreators.userSignUpSuccess().type);
     expect(sagaTester.getLatestCalledAction()).toEqual(NavigationActions.navigate({ routeName: 'SignIn' }));
     expect(sagaTester.wasCalled(NavigationActions.navigate({ routeName: 'SignIn' }).type)).toBe(true);
+    expect(sagaTester.getCalledActions()).toContainEqual(ActionCreators.userSignUpSuccess('Usuário registrado com sucesso!'));
+  });
+
+  it('User can\'t signup', () => {
+    apiMock.onPost('/api/signup')
+      .reply(400);
   });
 
   it('Update user', async () => {
