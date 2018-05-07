@@ -7,7 +7,7 @@ import api from 'services/api';
 
 import ActionCreators from 'store/ducks/event';
 
-const eventFixture = require('./fixtures/user.json');
+const eventFixture = require('./fixtures/event.json');
 
 const id = Math.random();
 
@@ -20,6 +20,9 @@ describe('Testing Event Saga', () => {
       initialState: {
         event: {
           list: [],
+        },
+        user: {
+          token: 'umtokenvalido',
         },
       },
     });

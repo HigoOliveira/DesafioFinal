@@ -1,4 +1,5 @@
 import { createReducer, createActions } from 'reduxsauce';
+import { Types as UserTypes } from './user';
 
 /* Types & Action Creators */
 const { Types, Creators } = createActions({
@@ -34,8 +35,13 @@ export const addNewSuccess = (state, action) => ({
     (action.oldId === event.id ? { ...event, id: action.newId } : event)),
 });
 
+export const cleanState = () => ({
+  list: [],
+});
+
 /* Reducers to types */
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.EVENT_ADD_NEW]: addNew,
   [Types.EVENT_ADD_NEW_SUCCESS]: addNewSuccess,
+  [UserTypes.USER_LOGOUT]: cleanState,
 });

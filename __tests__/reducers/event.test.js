@@ -1,4 +1,5 @@
 import ActionCreators, { reducer, INITIAL_STATE } from 'store/ducks/event';
+import UserActions from 'store/ducks/user';
 
 describe('Testing event reducer', () => {
   function getReducer(action) {
@@ -20,5 +21,12 @@ describe('Testing event reducer', () => {
     const initialState = getReducer(ActionCreators.eventAddNew(id, '2018-04-19 08:56', 'Testar reducer', 'Casa'));
     const state = reducer(initialState, ActionCreators.eventAddNewSuccess(id, 1));
     expect(state.list[0].id).toEqual(1);
+  });
+
+  it('Clean the list when user logout', () => {
+    const initialState = getReducer(ActionCreators.eventAddNew(1, '2018-04-19 08:56', 'Testar reducer', 'Casa'));
+    const state = reducer(initialState, UserActions.userLogout());
+
+    expect(state.list).toEqual([]);
   });
 });
