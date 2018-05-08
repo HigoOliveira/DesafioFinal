@@ -8,8 +8,10 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 
 /* Presentational */
-import { View, TouchableOpacity, ScrollView, Animated, Text } from 'react-native';
+import { View, TouchableOpacity, ScrollView, Animated, Dimensions, StatusBar, Platform } from 'react-native';
 import { Calendar } from 'react-native-calendars';
+
+import { Header } from 'react-navigation';
 
 import IconMaterial from 'react-native-vector-icons/MaterialIcons';
 import IconAwesome from 'react-native-vector-icons/FontAwesome';
@@ -26,6 +28,13 @@ import DayCalendar from './components/DayCalendar';
 const HEADER_MIN_HEIGHT = 44;
 let HEADER_MAX_HEIGHT = 0;
 let HEADER_SCROLL_DISTANCE = 0;
+
+const WIN_HEIGHT = Dimensions.get('window').height;
+const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
+
+const minHeight = HEADER_MAX =>
+  (WIN_HEIGHT + HEADER_MAX) - (Header.HEIGHT + HEADER_MIN_HEIGHT + STATUSBAR_HEIGHT);
+
 
 class Home extends Component {
   static propTypes = {
@@ -60,13 +69,10 @@ class Home extends Component {
     this.props.navigation.setParams({ showModal: () => this.showModal() });
   }
 
-  showModal = () => {
-    this.setState({ showModal: true });
-  }
-
-  _getComponentDimensions = (event) => {
+  getComponentDimensions = (event) => {
     if (!HEADER_MAX_HEIGHT) {
       HEADER_MAX_HEIGHT = event.nativeEvent.layout.height;
+      console.tron.log(HEADER_MAX_HEIGHT);
       HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
       this.forceUpdate();
     }
@@ -75,6 +81,10 @@ class Home extends Component {
     } else {
       this.setState({ semana: false });
     }
+  }
+
+  showModal = () => {
+    this.setState({ showModal: true });
   }
 
   changedDate = (date) => {
@@ -134,21 +144,28 @@ class Home extends Component {
         <ScrollView
           style={styles.scrollMain}
           scrollEventThrottle={16}
-          onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])}
-          contentContainerStyle={styles.scrollContent}
+          onScroll={
+            Animated.event([
+                { nativeEvent: { contentOffset: { y: this.state.scrollY } } },
+              ])
+            }
+          contentContainerStyle={
+            [styles.scrollContent, { minHeight: minHeight(HEADER_MAX_HEIGHT) }]
+          }
         >
           <View style={{ marginTop: HEADER_MAX_HEIGHT }}>
             <EventList currentDate={this.state.currentDate} />
           </View>
         </ScrollView>
-        <Animated.View style={[styles.header, { height: headerHeight }]} onLayout={event => this._getComponentDimensions(event)}>
+        <Animated.View
+          style={[styles.header, { height: headerHeight }]}
+          onLayout={event => this.getComponentDimensions(event)}
+        >
           {this.renderCalendar()}
         </Animated.View>
       </View>
     );
   }
 }
-
-
 
 export default connect()(Home);
