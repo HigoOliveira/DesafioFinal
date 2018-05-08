@@ -7,7 +7,7 @@ import { Types as EventTypes } from 'store/ducks/event';
 
 /* Sagas */
 import { getUserInformation, login, signUp, updateInformation } from './user';
-import { addEvent, loadEvents } from './event';
+import { addEvent, loadEvents, deleteEvent } from './event';
 
 export default function* root() {
   yield all([
@@ -16,6 +16,7 @@ export default function* root() {
     takeLatest(UserTypes.USER_SIGN_UP, signUp),
     takeLatest(UserTypes.USER_UPDATE_INFORMATION, updateInformation),
     takeLatest(EventTypes.EVENT_ADD_NEW, addEvent),
+    takeLatest(EventTypes.EVENT_DELETE_REMOTE, deleteEvent),
     takeLatest(EventTypes.EVENT_LOAD, loadEvents),
   ]);
 }

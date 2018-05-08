@@ -19,4 +19,11 @@ const confirm = (text, onConfirm = () => {}, onCancel = () => {}) => Alert.alert
   { cancelable: false },
 );
 
-export default { alert, confirm };
+const multipleChoices = (text, buttons) => Alert.alert(
+  'Scheduler',
+  text,
+  buttons,
+  { cancelable: false },
+);
+
+export default { alert, confirm, multipleChoices };

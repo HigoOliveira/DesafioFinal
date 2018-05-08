@@ -1,17 +1,19 @@
+/* Core */
 import React from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 
+/* Presentational */
 import { View, TouchableOpacity, Text } from 'react-native';
 
 import Swipeout from 'react-native-swipeout';
 
-import { colors } from 'styles';
-
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+import { colors } from 'styles';
 import styles from './styles';
 
-const EventItem = ({ event }) => (
+const EventItem = ({ event, onDelete }) => (
   <Swipeout
     autoClose
     right={[
@@ -25,8 +27,9 @@ const EventItem = ({ event }) => (
                 styles.button,
                 { backgroundColor: colors.red },
               ]}
-              onPress={()=>{}}
-              >
+              onPress={onDelete}
+              id="delete"
+            >
               <Icon name="times" size={24} color={colors.white} />
             </TouchableOpacity>
           </View>
@@ -36,7 +39,7 @@ const EventItem = ({ event }) => (
     left={[
       {
         backgroundColor: colors.primary,
-        text: 'Delete',
+        text: 'Share',
         width: 200,
         component: (
           <View style={styles.buttonContainer} >
@@ -45,7 +48,8 @@ const EventItem = ({ event }) => (
                 styles.button,
                 { backgroundColor: colors.blue },
               ]}
-              onPress={()=>{}}
+              onPress={() => {}}
+              id="share"
             >
               <Icon name="share" size={24} color={colors.white} />
             </TouchableOpacity>
@@ -66,5 +70,15 @@ const EventItem = ({ event }) => (
     </View>
   </Swipeout>
 );
+
+EventItem.propTypes = {
+  event: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    where: PropTypes.string,
+    datetime: PropTypes.string,
+  }).isRequired,
+  onDelete: PropTypes.func.isRequired,
+};
 
 export default EventItem;

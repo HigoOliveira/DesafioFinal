@@ -48,4 +48,12 @@ describe('Testing Event Saga', () => {
     sagaTester.dispatch(ActionCreators.eventLoad());
     await sagaTester.waitFor(ActionCreators.eventLoadSuccess().type);
   });
+
+  it('User remove event local and remote', async () => {
+    apiMock.onPost('/api/event/delete')
+      .reply(200);
+
+    sagaTester.dispatch(ActionCreators.eventDeleteRemote(1));
+    await sagaTester.waitFor(ActionCreators.eventDeleteRemoteSuccess().type);
+  })
 });

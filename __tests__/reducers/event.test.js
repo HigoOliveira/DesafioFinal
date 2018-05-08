@@ -29,4 +29,18 @@ describe('Testing event reducer', () => {
 
     expect(state.list).toEqual([]);
   });
+
+  it('Remove event', () => {
+    const event = ActionCreators.eventAddNew(2, '2018-04-19 08:56', 'Testar reducer', 'Casa');
+    const initialState = getReducer(ActionCreators.eventAddNew(1, '2018-04-19 08:56', 'Testar reducer', 'Casa'));
+    let state = reducer(initialState, event);
+    state = reducer(state, ActionCreators.eventDeleteLocal(1));
+
+    delete event.type;
+
+    expect(state.list).toHaveLength(1);
+    expect(state.list).toContainEqual(event);
+    state = reducer(state, ActionCreators.eventDeleteLocal(2));
+    expect(state.list).toEqual([]);
+  });
 });

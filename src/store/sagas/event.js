@@ -30,3 +30,16 @@ export function* loadEvents() {
     yield put(ActionCreators.eventLoadSuccess(response.data));
   }
 }
+
+export function* deleteEvent(action) {
+  const { token } = yield select(state => state.user);
+  const response = yield call(api.post, `/api/event/delete/${action.id}`, {
+  }, {
+    headers: {
+      Authorization: `Token ${token}`,
+    },
+  });
+  if (response.ok) {
+    yield put(ActionCreators.eventDeleteRemoteSuccess(action.id));
+  }
+}

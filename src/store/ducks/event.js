@@ -5,6 +5,9 @@ import { Types as UserTypes } from './user';
 const { Types, Creators } = createActions({
   eventAddNew: ['id', 'datetime', 'name', 'where'],
   eventAddNewSuccess: ['oldId', 'newId'],
+  eventDeleteLocal: ['id'],
+  eventDeleteRemote: ['id'],
+  eventDeleteRemoteSuccess: ['id'],
   eventLoad: null,
   eventLoadSuccess: ['list'],
 });
@@ -38,6 +41,11 @@ export const addNewSuccess = (state, action) => ({
     (action.oldId === event.id ? { ...event, id: action.newId } : event)),
 });
 
+export const deleteEventLocal = (state, action) => ({
+  ...state,
+  list: state.list.filter(event => event.id !== action.id),
+});
+
 export const load = state => ({
   ...state,
   loading: true,
@@ -57,6 +65,8 @@ export const cleanState = () => ({
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.EVENT_ADD_NEW]: addNew,
   [Types.EVENT_ADD_NEW_SUCCESS]: addNewSuccess,
+  [Types.EVENT_DELETE_LOCAL]: deleteEventLocal,
+  [Types.EVENT_DELETE_REMOTE_SUCCESS]: deleteEventLocal,
   [Types.EVENT_LOAD]: load,
   [Types.EVENT_LOAD_SUCCESS]: loadSuccess,
 
