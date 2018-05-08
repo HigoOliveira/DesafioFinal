@@ -3,6 +3,8 @@ import React from 'react';
 
 import _ from 'lodash';
 
+import moment from 'moment';
+
 /* Redux */
 import { connect } from 'react-redux';
 
@@ -13,10 +15,8 @@ import EventItem from './components/EventItem';
 import styles from './styles';
 
 const EventList = ({ events, currentDate }) => {
-  const eventsFiltered = _.filter(events, (n) => {
-    const datetime = (n.datetime && n.datetime.split(' ')[0]) || '';
-    return datetime === currentDate;
-  });
+  const eventsFiltered = _.filter(events, n =>
+    moment(n.datetime).format('YYYY-MM-DD') === moment(currentDate).format('YYYY-MM-DD'));
   return (
     <React.Fragment>
       {
