@@ -35,6 +35,7 @@ const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
 const minHeight = HEADER_MAX =>
   (WIN_HEIGHT + HEADER_MAX) - (Header.HEIGHT + HEADER_MIN_HEIGHT + STATUSBAR_HEIGHT);
 
+const date = (datetime) => moment(datetime).format('YYYY-MM-DD');
 
 class Home extends Component {
   static propTypes = {
@@ -72,7 +73,6 @@ class Home extends Component {
   getComponentDimensions = (event) => {
     if (!HEADER_MAX_HEIGHT) {
       HEADER_MAX_HEIGHT = event.nativeEvent.layout.height;
-      console.tron.log(HEADER_MAX_HEIGHT);
       HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
       this.forceUpdate();
     }
@@ -90,6 +90,10 @@ class Home extends Component {
   changedDate = (date) => {
     this.setState({ currentDate: date });
   }
+
+  getEvents = () => this.props.events.map(
+    event => ({ [date(event.datetime)] : { marked: true } })
+  ).reduce((a, b) => Object.assign(a,b), {});
 
   renderCalendar = () => {
     if (this.state.semana) {
@@ -113,9 +117,7 @@ class Home extends Component {
           arrowColor: colors.white,
           todayTextColor: colors.white,
         }}
-        markedDates={{
-          [this.state.currentDate]: { selected: true },
-        }}
+        markedDates={Object.assign(this.getEvents(), {[this.state.currentDate]: { selected: true, marked: this.props.events.find((event,index) => date(event.datetime) === this.state.currentDate) } })}
         onDayPress={(day) => { this.changedDate(day.dateString); }}
       />
     );
@@ -132,15 +134,13 @@ class Home extends Component {
         extrapolate: 'clamp',
       });
     }
-
-
+    
     return (
       <View style={styles.container}>
         <Modal
           visible={this.state.showModal}
           onCloseModal={() => this.setState({ showModal: false })}
         />
-        {/* <EventList /> */}
         <ScrollView
           style={styles.scrollMain}
           scrollEventThrottle={16}
@@ -168,4 +168,8 @@ class Home extends Component {
   }
 }
 
-export default connect()(Home);
+const mapStateToProps = state => ({
+  events: state.event.list,
+})
+
+export default connect(mapStateToProps)(Home);
