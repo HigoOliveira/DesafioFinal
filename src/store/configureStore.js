@@ -11,7 +11,7 @@ export default (rootReducer, rootSaga) => {
     key: 'root',
     storage,
     stateReconciler: autoMergeLevel2,
-    blacklist: ['nav'],
+    blacklist: ['nav', 'notification'],
   };
 
   const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -44,10 +44,11 @@ class Modal extends Component {
       Alert.alert('Você precisa preencher todos os campos para poder adicionar um novo evento!');
     } else {
       this.props.addNew(Math.random(), datetime, name, where);
+      
       this.closeModal();
     }
   }
-
+  
   render() {
     return (
       <ModalNative

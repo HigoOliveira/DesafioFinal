@@ -1,6 +1,7 @@
 import api from 'services/api';
 import { call, put, select } from 'redux-saga/effects';
 import ActionCreators from 'store/ducks/event';
+import NotificationActions from 'store/ducks/notification';
 
 export function* addEvent(action) {
   const { token } = yield select(state => state.user);
@@ -14,6 +15,7 @@ export function* addEvent(action) {
     },
   });
   if (response.ok) {
+    yield put(NotificationActions.notificate('Adicionado com sucesso!'))
     yield put(ActionCreators.eventAddNewSuccess(action.id, response.data.id));
   }
 }
