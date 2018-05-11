@@ -15,8 +15,12 @@ export function* addEvent(action) {
     },
   });
   if (response.ok) {
-    yield put(NotificationActions.notificate('Adicionado com sucesso!'))
+    yield put(NotificationActions.notificationSend({ text: 'Adicionado com sucesso!' }));
     yield put(ActionCreators.eventAddNewSuccess(action.id, response.data.id));
+  } else {
+    yield put(NotificationActions.notificationSendWarning({
+      text: 'Falha ao criar evento',
+    }));
   }
 }
 
@@ -30,6 +34,13 @@ export function* loadEvents() {
   });
   if (response.ok) {
     yield put(ActionCreators.eventLoadSuccess(response.data));
+    yield put(NotificationActions.notificationSendAlert({
+      text: 'Dados carregados com sucesso',
+    }));
+  } else {
+    yield put(NotificationActions.notificationSendWarning({
+      text: 'Falha ao resgatar dados',
+    }));
   }
 }
 
@@ -42,6 +53,13 @@ export function* deleteEvent(action) {
     },
   });
   if (response.ok) {
+    yield put(NotificationActions.notificationSendAlert({
+      text: 'Seu evento foi apagado com sucesso!',
+    }));
     yield put(ActionCreators.eventDeleteRemoteSuccess(action.id));
+  } else {
+    yield put(NotificationActions.notificationSendWarning({
+      text: 'Falha ao excluir seu evento',
+    }));
   }
 }
