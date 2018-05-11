@@ -15,7 +15,7 @@ export function* addEvent(action) {
     },
   });
   if (response.ok) {
-    yield put(NotificationActions.notificationSend({ text: 'Adicionado com sucesso!' }));
+    yield put(NotificationActions.notificationSendAlert({ text: 'Adicionado com sucesso!' }));
     yield put(ActionCreators.eventAddNewSuccess(action.id, response.data.id));
   } else {
     yield put(NotificationActions.notificationSendWarning({
