@@ -3,6 +3,7 @@ import { call, put, select } from 'redux-saga/effects';
 import { NavigationActions } from 'react-navigation';
 import ActionCreators from 'store/ducks/user';
 import EventActions from 'store/ducks/event';
+import NotificationActions from 'store/ducks/notification';
 
 export function* getUserInformation(action) {
   const response = yield call(api.get, `/api/verify-user-exists/${action.cellphone}`);
@@ -21,7 +22,10 @@ export function* login(action) {
     yield put(ActionCreators.userLoginSuccess(response.data.token));
     yield put(EventActions.eventLoad());
   } else {
-    yield put(ActionCreators.userLoginError(response.data.non_field_errors[0]));
+    yield put(ActionCreators.userLoginError());
+    yield put(NotificationActions.notificationSendWarning({
+      text: response.data.non_field_errors[0],
+    }));
   }
 }
 
@@ -32,8 +36,15 @@ export function* signUp(action) {
     password: action.password,
   });
   if (response.ok) {
-    yield put(ActionCreators.userSignUpSuccess('Usuário registrado com sucesso!'));
+    yield put(ActionCreators.userSignUpSuccess());
     yield put(NavigationActions.navigate({ routeName: 'SignIn' }));
+    yield put(NotificationActions.notificationSendAlert({
+      text: 'Usuário registrado com sucesso!',
+    }));
+  } else {
+    yield put(NotificationActions.notificationSendWarning({
+      text: 'Falha ao registrar usuário!',
+    }));
   }
 }
 
@@ -51,5 +62,12 @@ export function* updateInformation(action) {
 
   if (response.ok) {
     yield put(ActionCreators.userUpdateInformationSuccess(action.name));
+    yield put(NotificationActions.notificationSendAlert({
+      text: 'Seu perfil foi atualizado com sucesso!',
+    }));
+  } else {
+    yield put(NotificationActions.notificationSendWarning({
+      text: 'Falha ao atualizar seu perfil!',
+    }));
   }
 }

@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 /* Redux */
 import { connect } from 'react-redux';
 import ActionCreators from 'store/ducks/user';
+import { NavigationActions } from 'react-navigation';
 
 /* Presentational */
 import { View } from 'react-native';
@@ -19,6 +20,7 @@ class SignUp extends Component {
   static propTypes = {
     cellphone: PropTypes.string.isRequired,
     signUp: PropTypes.func.isRequired,
+    goToStart: PropTypes.func.isRequired,
   }
   state = {
     name: '',
@@ -67,7 +69,7 @@ class SignUp extends Component {
           secureTextEntry
         />
         <Button id="signup" title="Criar conta grátis" onPress={this.validation} />
-        <Button id="signin" title="Já tenho conta" onPress={() => {}} clean />
+        <Button id="signin" title="Já tenho conta" onPress={this.props.goToStart} clean />
       </View>
     );
   }
@@ -78,7 +80,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  signUp: (cellphone, name, password) => dispatch(ActionCreators.userSignUp(cellphone, name, password)),
+  signUp: (cellphone, name, password) =>
+    dispatch(ActionCreators.userSignUp(cellphone, name, password)),
+  goToStart: () =>
+    dispatch(NavigationActions.navigate({ routeName: 'Start' })),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

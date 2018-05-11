@@ -9,11 +9,11 @@ const { Types, Creators } = createActions({
   userDoesExist: ['cellphone'],
 
   userSignUp: ['cellphone', 'name', 'password'],
-  userSignUpSuccess: ['msg'],
+  userSignUpSuccess: null,
 
   userLogin: ['username', 'password'],
   userLoginSuccess: ['token'],
-  userLoginError: ['msg'],
+  userLoginError: null,
 
   userLogout: null,
 
@@ -56,9 +56,9 @@ export const signUp = (state, action) => ({
   cellphone: action.cellphone,
   loading: true,
 });
-export const signUpSuccess = (state, action) => ({
+
+export const signUpSuccess = state => ({
   ...state,
-  msg: action.msg,
   loading: false,
 });
 
@@ -69,10 +69,9 @@ export const loginSuccess = (state, action) => ({
   loading: false,
   isLoggedIn: true,
 });
-export const loginError = (state, action) => ({
+export const loginError = state => ({
   ...state,
   loading: false,
-  msg: action.msg,
 });
 
 export const logout = () => INITIAL_STATE;
