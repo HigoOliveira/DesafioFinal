@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 
 /* Presentational */
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity, Text, Share } from 'react-native';
 
 import Swipeout from 'react-native-swipeout';
 
@@ -48,7 +48,16 @@ const EventItem = ({ event, onDelete }) => (
                 styles.button,
                 { backgroundColor: colors.blue },
               ]}
-              onPress={() => {}}
+              onPress={() => {
+                try {
+                  Share.share({
+                    title: 'Schedule',
+                    message: `evento: ${event.name}\n local: ${event.where}\n data: ${moment(event.datetime).format('DD/MM/YYYY [as] HH[h] mm[m]')}`,
+                  });
+                } catch (err) {
+                  // Err;
+                }
+              }}
               id="share"
             >
               <Icon name="share" size={24} color={colors.white} />

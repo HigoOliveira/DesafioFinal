@@ -15,7 +15,12 @@ import EventItem from './components/EventItem';
 
 import styles from './styles';
 
-const EventList = ({ events, currentDate, deleteEventLocal, deleteEventRemote }) => {
+const EventList = ({
+  events,
+  currentDate,
+  deleteEventLocal,
+  deleteEventRemote,
+}) => {
   const eventsFiltered = events.filter(n =>
     moment(n.datetime).format('YYYY-MM-DD') === moment(currentDate).format('YYYY-MM-DD'));
   return (
