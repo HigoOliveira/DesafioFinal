@@ -7,84 +7,103 @@ import { connect } from 'react-redux';
 import ActionCreators from 'store/ducks/notification';
 
 /* Presentational */
-import { Animated, TouchableOpacity, View, Text } from 'react-native';
+import { Animated, TouchableOpacity, Text } from 'react-native';
+
+import { colors } from 'styles';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import styles from './styles';
 
+const getColor = (type) => {
+  switch (type) {
+    case 'warning':
+      return colors.red;
+    case 'alert':
+      return colors.secondary;
+    default:
+      return colors.blue;
+  }
+};
+
 class Notification extends Component {
+    static propTypes = {
+      notification: PropTypes.shape({
+        text: PropTypes.string,
+        type: PropTypes.string,
+        open: PropTypes.bool,
+        time: PropTypes.number,
+      }).isRequired,
+      clean: PropTypes.func.isRequired,
+    }
     state = {
-        height: new Animated.Value(0),
-        visible: false,
-        event: undefined,
+      height: new Animated.Value(0),
+      event: undefined,
     };
 
-    componentDidMount() {
-        // this.show();
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.open) {
-            if (nextProps.open) {
-                console.tron.log('Chama o show()');
-                this.show()
-            } else {
-                console.tron.log('Chamou o hide()');
-                this.hide();
-            }
+    componentDidUpdate(prevProps) {
+      if (prevProps.notification.open !== this.props.notification.open) {
+        if (this.props.notification.open) {
+          console.tron.log('Antes de chamar');
+          this.show();
+        } else {
+          this.hide();
         }
-    }
-
-    hide = () => {
-        this.setState({ visible: false });
-        this.props.clean();
-        Animated.timing(this.state.height, {
-            duration: 500,
-            toValue: 0,
-        }).start();
-    }
-
-    show = () => {
-        this.setState({
-            event: setTimeout(() => this.hide(), this.props.time),
-            visible: true,
-        });
-        Animated.timing(this.state.height, {
-            duration: 500,
-            toValue: 56,
-        }).start();
+      }
     }
 
     onPressHide = () => {
-        this.state.event && clearTimeout(this.state.event);
-        this.hide();
+      if (this.state.event) clearTimeout(this.state.event);
+      this.hide();
+    }
+
+    hide = () => {
+      Animated.timing(this.state.height, {
+        duration: 500,
+        toValue: 0,
+      }).start(() => {
+        this.props.clean();
+      });
+    }
+
+    show = () => {
+      console.tron.log(this.props.notification.time);
+      this.setState({
+        event: setTimeout(() => this.hide(), this.props.notification.time),
+      });
+      Animated.timing(this.state.height, {
+        duration: 500,
+        toValue: 56,
+      }).start();
     }
 
     render() {
-        const { text } = this.props;
-        return (
-            <Animated.View style={[styles.container, { height: this.state.height}]}>
-                <Text style={styles.text}>{text}</Text>
-                <TouchableOpacity
-                    onPress={this.onPressHide}
-                    style={styles.button}
-                >
-                    <Icon name="times" size={14}/>
-                </TouchableOpacity>
-            </Animated.View>
-          );
+      const { text, type } = this.props.notification;
+      return (
+        <Animated.View style={[
+            styles.container,
+            {
+              backgroundColor: getColor(type),
+              height: this.state.height,
+            }]}
+        >
+          <Text style={styles.text}>{text}</Text>
+          <TouchableOpacity
+            onPress={this.onPressHide}
+            style={styles.button}
+          >
+            <Icon name="times" size={14} color={colors.white} />
+          </TouchableOpacity>
+        </Animated.View>
+      );
     }
 }
 
 const mapStateToProps = state => ({
-    text: state.notification.text,
-    time: state.notification.time,
-    type: state.notification.type,
-    open: state.notification.open,
+  notification: state.notification.data,
 });
 
 const mapDispatchToProps = dispatch => ({
-    clean: () => dispatch(ActionCreators.clean()),
+  clean: () => dispatch(ActionCreators.notificationClean()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Notification);

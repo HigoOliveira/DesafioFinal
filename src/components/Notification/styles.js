@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { metrics, fonts, colors } from 'styles';
+import { fonts, colors } from 'styles';
 
 const styles = StyleSheet.create({
   container: {
@@ -19,9 +19,9 @@ const styles = StyleSheet.create({
     color: colors.white,
   },
   button: {
-      position: 'absolute',
-      right: 20,
-  }
+    position: 'absolute',
+    right: 20,
+  },
 });
 
 export default styles;
