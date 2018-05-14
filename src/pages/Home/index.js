@@ -33,9 +33,9 @@ const WIN_HEIGHT = Dimensions.get('window').height;
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
 
 const minHeight = HEADER_MAX =>
-  (WIN_HEIGHT + HEADER_MAX) - (Header.HEIGHT + HEADER_MIN_HEIGHT + STATUSBAR_HEIGHT);
+  WIN_HEIGHT - HEADER_MIN_HEIGHT - Header.HEIGHT - STATUSBAR_HEIGHT - 20;// (Header.HEIGHT + HEADER_MIN_HEIGHT + STATUSBAR_HEIGHT);
 
-const date = (datetime) => moment(datetime).format('YYYY-MM-DD');
+const date = datetime => moment(datetime).format('YYYY-MM-DD');
 
 class Home extends Component {
   static propTypes = {
@@ -64,6 +64,7 @@ class Home extends Component {
     showModal: false,
     scrollY: new Animated.Value(0),
     currentDate: moment().format('YYYY-MM-DD'),
+    semana: false,
   }
 
   componentDidMount() {
@@ -75,26 +76,42 @@ class Home extends Component {
       HEADER_MAX_HEIGHT = event.nativeEvent.layout.height;
       HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
       this.forceUpdate();
-    }
-    if (event.nativeEvent.layout.height === HEADER_MIN_HEIGHT) {
-      this.setState({ semana: true });
     } else {
-      this.setState({ semana: false });
+    // if (event.nativeEvent.layout.height === HEADER_MIN_HEIGHT) {
+    //   this.setState({ semana: true });
+    // } else if (this.state.semana) {
+    //   this.forceUpdate();
+    //   console.tron.log('CHAMOU ISSO DAQUI - 84');
+    // }
+      const { height } = event.nativeEvent.layout;
+      // console.tron.log(height);
+      // if (height === HEADER_MIN_HEIGHT) {
+      //   console.tron.log('Sou o mesmo tamanho do height');
+      //   this.setState(() => ({ semana: true }));
+      // } else {
+      //   if (this.state.semana) {
+      //     this.setState(() => ({ semana: false }));
+      //     console.tron.log(this.state.semana);
+      //   }
+      //   console.tron.log('Já eu não sou');
+      // }
+      if (height === HEADER_MIN_HEIGHT) {
+        this.setState(() => ({ semana: true }));
+      } else if (this.state.semana) {
+        this.setState(() => ({ semana: false }));
+      }
     }
   }
+
+  getEvents = () => this.props.events.map(
+    event => ({ [date(event.datetime)]: { marked: true } }))
+    .reduce((a, b) => Object.assign(a, b), {});
+
+  changedDate = d => this.setState({ currentDate: d });
 
   showModal = () => {
     this.setState({ showModal: true });
   }
-
-  changedDate = (date) => {
-    this.setState({ currentDate: date });
-  }
-
-  getEvents = () => this.props.events.map(
-    event => ({ [date(event.datetime)] : { marked: true } })
-  ).reduce((a, b) => Object.assign(a,b), {});
-
   renderCalendar = () => {
     if (this.state.semana) {
       return (
@@ -117,7 +134,13 @@ class Home extends Component {
           arrowColor: colors.white,
           todayTextColor: colors.white,
         }}
-        markedDates={Object.assign(this.getEvents(), {[this.state.currentDate]: { selected: true, marked: this.props.events.find((event,index) => date(event.datetime) === this.state.currentDate) } })}
+        markedDates={Object.assign(this.getEvents(), {
+          [this.state.currentDate]: {
+            selected: true,
+            marked: this.props.events.find(event =>
+              date(event.datetime) === this.state.currentDate),
+            },
+            })}
         onDayPress={(day) => { this.changedDate(day.dateString); }}
       />
     );
@@ -134,7 +157,7 @@ class Home extends Component {
         extrapolate: 'clamp',
       });
     }
-    
+
     return (
       <View style={styles.container}>
         <Modal
@@ -150,16 +173,16 @@ class Home extends Component {
               ])
             }
           contentContainerStyle={
-            [styles.scrollContent, { minHeight: minHeight(HEADER_MAX_HEIGHT) }]
+            styles.scrollContent
           }
         >
-          <View style={{ marginTop: HEADER_MAX_HEIGHT }}>
+          <View style={{ marginTop: HEADER_MAX_HEIGHT, minHeight: minHeight(HEADER_MAX_HEIGHT) }}>
             <EventList currentDate={this.state.currentDate} />
           </View>
         </ScrollView>
         <Animated.View
           style={[styles.header, { height: headerHeight }]}
-          onLayout={event => this.getComponentDimensions(event)}
+          onLayout={this.getComponentDimensions}
         >
           {this.renderCalendar()}
         </Animated.View>
@@ -170,6 +193,6 @@ class Home extends Component {
 
 const mapStateToProps = state => ({
   events: state.event.list,
-})
+});
 
 export default connect(mapStateToProps)(Home);
