@@ -23,7 +23,6 @@ class DayCalendar extends Component {
 
   constructor(props) {
     super(props);
-    console.tron.log(props);
     this.state = {
       day: (props.currentDay && moment(props.currentDay)) || moment(),
     };

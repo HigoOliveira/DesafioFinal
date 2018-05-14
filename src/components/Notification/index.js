@@ -44,7 +44,6 @@ class Notification extends Component {
     componentDidUpdate(prevProps) {
       if (prevProps.notification.open !== this.props.notification.open) {
         if (this.props.notification.open) {
-          console.tron.log('Antes de chamar');
           this.show();
         } else {
           this.hide();
@@ -67,7 +66,6 @@ class Notification extends Component {
     }
 
     show = () => {
-      console.tron.log(this.props.notification.time);
       this.setState({
         event: setTimeout(() => this.hide(), this.props.notification.time),
       });
