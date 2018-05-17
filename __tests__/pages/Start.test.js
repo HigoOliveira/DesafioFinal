@@ -20,8 +20,12 @@ import ActionCreators from 'store/ducks/user';
 const mockStore = configureStore([]);
 
 const initialStore = {
-  user: {},
+  user: {
+    loading: false,
+  },
 };
+
+const cellphone = '9999999999';
 
 describe('Testing Start Page', () => {
   const store = mockStore(initialStore);
@@ -36,13 +40,21 @@ describe('Testing Start Page', () => {
 
   beforeEach(() => {
     wrapper = createWrapper().dive();
+    // Injeta o input que vem do maskedinput. Vem atráves do ref.
+    wrapper.instance().input = {
+      input: {
+        isValid: jest.fn().mockImplementation(() => wrapper.state('cellphone') === cellphone),
+        getRawValue: jest.fn().mockImplementation(() => cellphone),
+      },
+    };
+
     store.clearActions();
   });
 
   it('Can get user information when is valid cell phone', () => {
-    wrapper.setState({ cellphone: '9999999999' });
+    wrapper.setState({ cellphone });
     wrapper.find(Button).simulate('press');
-    expect(store.getActions()).toContainEqual(ActionCreators.userGetInformation('9999999999'));
+    expect(store.getActions()).toContainEqual(ActionCreators.userGetInformation(`+55${cellphone}`));
   });
 
   it('Can\'t get user information when is invalid cell phone', () => {

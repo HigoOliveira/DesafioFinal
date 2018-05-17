@@ -6,6 +6,7 @@ import rootSaga from 'store/sagas';
 import api from 'services/api';
 
 import ActionCreators from 'store/ducks/event';
+import NotificationActions from 'store/ducks/notification';
 
 const eventFixture = require('./fixtures/event.json');
 
@@ -50,10 +51,13 @@ describe('Testing Event Saga', () => {
   });
 
   it('User remove event local and remote', async () => {
-    apiMock.onPost('/api/event/delete')
+    apiMock.onPost('/api/event/delete/1')
       .reply(200);
 
     sagaTester.dispatch(ActionCreators.eventDeleteRemote(1));
     await sagaTester.waitFor(ActionCreators.eventDeleteRemoteSuccess().type);
-  })
+    expect(sagaTester.getLatestCalledAction()).toEqual(ActionCreators.eventDeleteRemoteSuccess(1));
+    expect(sagaTester.getCalledActions()).toContainEqual(NotificationActions.notificationSendAlert({ text: 'Seu evento foi apagado com sucesso!', }));
+
+  });
 });

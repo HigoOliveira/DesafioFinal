@@ -7,6 +7,7 @@ import api from 'services/api';
 
 import ActionCreators from 'store/ducks/user';
 import EventActions from 'store/ducks/event';
+import NotificationActions from 'store/ducks/notification';
 
 import { NavigationActions } from 'react-navigation';
 
@@ -74,8 +75,9 @@ describe('Testing User Saga', () => {
 
     await sagaTester.waitFor(ActionCreators.userLoginError().type);
 
+    expect(sagaTester.getCalledActions()).toContainEqual(ActionCreators.userLoginError());
     expect(sagaTester.getLatestCalledAction())
-      .toEqual(ActionCreators.userLoginError(response.non_field_errors[0]));
+      .toEqual(NotificationActions.notificationSendWarning({ text: response.non_field_errors[0] }));
   });
 
   it('User signup valid', async () => {
@@ -84,9 +86,10 @@ describe('Testing User Saga', () => {
 
     sagaTester.dispatch(ActionCreators.userSignUp('+559999999999', 'Higo de Oliveira Ribeiro', 'senha1234'));
     await sagaTester.waitFor(ActionCreators.userSignUpSuccess().type);
-    expect(sagaTester.getLatestCalledAction()).toEqual(NavigationActions.navigate({ routeName: 'SignIn' }));
+    expect(sagaTester.getLatestCalledAction()).toEqual(NotificationActions.notificationSendAlert({ text: 'Usuário registrado com sucesso!' }));
     expect(sagaTester.wasCalled(NavigationActions.navigate({ routeName: 'SignIn' }).type)).toBe(true);
     expect(sagaTester.getCalledActions()).toContainEqual(ActionCreators.userSignUpSuccess('Usuário registrado com sucesso!'));
+    expect(sagaTester.getCalledActions()).toContainEqual(NavigationActions.navigate({ routeName: 'SignIn' }));
   });
 
   it('User can\'t signup', () => {
@@ -103,6 +106,7 @@ describe('Testing User Saga', () => {
 
     sagaTester.dispatch(ActionCreators.userUpdateInformation('Higo Ribeiro', 'newpass', 'newpass'));
     await sagaTester.waitFor(ActionCreators.userUpdateInformationSuccess().type);
-    expect(sagaTester.getLatestCalledAction()).toEqual(ActionCreators.userUpdateInformationSuccess('Higo Ribeiro'));
+    expect(sagaTester.getLatestCalledAction()).toEqual(NotificationActions.notificationSendAlert({ text: 'Seu perfil foi atualizado com sucesso!' }));
+    expect(sagaTester.getCalledActions()).toContainEqual(ActionCreators.userUpdateInformationSuccess('Higo Ribeiro'));
   });
 });
