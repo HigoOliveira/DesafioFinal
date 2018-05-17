@@ -20,6 +20,7 @@ const EventList = ({
   currentDate,
   deleteEventLocal,
   deleteEventRemote,
+  scroll,
 }) => {
   const eventsFiltered = events.filter(n =>
     moment(n.datetime).format('YYYY-MM-DD') === moment(currentDate).format('YYYY-MM-DD'));
@@ -31,6 +32,7 @@ const EventList = ({
           (<EventItem
             key={event.id}
             event={event}
+            scroll={scroll}
             onDelete={() =>
               Alert.multipleChoices('Escolha uma opção para exlcuir', [
                 { text: 'Local', onPress: () => deleteEventLocal(event.id) },

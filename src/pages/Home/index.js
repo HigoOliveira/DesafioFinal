@@ -65,6 +65,7 @@ class Home extends Component {
     scrollY: new Animated.Value(0),
     currentDate: moment().format('YYYY-MM-DD'),
     semana: false,
+    allowVerticalScroll: true,
   }
 
   componentDidMount() {
@@ -112,6 +113,13 @@ class Home extends Component {
   showModal = () => {
     this.setState({ showModal: true });
   }
+
+  swipeScrollEvent = (allowParentScroll) => {
+    // if (this.state.allowVerticalScroll !== allowParentScroll) {
+    // }
+    this.setState({ allowVerticalScroll: allowParentScroll });
+  }
+
   renderCalendar = () => {
     if (this.state.semana) {
       return (
@@ -166,6 +174,7 @@ class Home extends Component {
         />
         <ScrollView
           style={styles.scrollMain}
+          scrollEnabled={this.state.allowVerticalScroll}
           scrollEventThrottle={16}
           onScroll={
             Animated.event([
@@ -177,7 +186,10 @@ class Home extends Component {
           }
         >
           <View style={{ marginTop: HEADER_MAX_HEIGHT, minHeight: minHeight(HEADER_MAX_HEIGHT) }}>
-            <EventList currentDate={this.state.currentDate} />
+            <EventList
+              scroll={this.swipeScrollEvent}
+              currentDate={this.state.currentDate}
+            />
           </View>
         </ScrollView>
         <Animated.View

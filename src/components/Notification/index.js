@@ -42,6 +42,7 @@ class Notification extends Component {
     };
 
     componentDidUpdate(prevProps) {
+      console.log('Sou um teste');
       if (prevProps.notification.open !== this.props.notification.open) {
         if (this.props.notification.open) {
           this.show();

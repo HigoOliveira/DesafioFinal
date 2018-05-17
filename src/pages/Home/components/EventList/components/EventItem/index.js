@@ -13,9 +13,10 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { colors } from 'styles';
 import styles from './styles';
 
-const EventItem = ({ event, onDelete }) => (
+const EventItem = ({ event, onDelete, scroll }) => (
   <Swipeout
     autoClose
+    scroll={scroll}
     right={[
       {
         text: 'Delete',
