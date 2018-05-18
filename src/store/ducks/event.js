@@ -5,6 +5,7 @@ import { Types as UserTypes } from './user';
 const { Types, Creators } = createActions({
   eventAddNew: ['id', 'datetime', 'name', 'where'],
   eventAddNewSuccess: ['oldId', 'newId'],
+  eventAddNewError: null,
   eventDeleteLocal: ['id'],
   eventDeleteRemote: ['id'],
   eventDeleteRemoteSuccess: ['id'],
@@ -31,6 +32,7 @@ export const addNew = (state, action) => ({
       datetime: action.datetime,
       name: action.name,
       where: action.where,
+      remote: false,
     },
   ],
 });
@@ -38,7 +40,7 @@ export const addNew = (state, action) => ({
 export const addNewSuccess = (state, action) => ({
   ...state,
   list: state.list.map(event =>
-    (action.oldId === event.id ? { ...event, id: action.newId } : event)),
+    (action.oldId === event.id ? { ...event, id: action.newId, remote: true } : event)),
 });
 
 export const deleteEventLocal = (state, action) => ({

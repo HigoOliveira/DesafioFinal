@@ -65,6 +65,7 @@ class Modal extends Component {
               secondary
             />
             <Input
+              id="name"
               placeholder="Qual o nome do evento?"
               type="none"
               secondary
@@ -72,6 +73,7 @@ class Modal extends Component {
               onChangeText={(name) => { this.setState({ name }); }}
             />
             <Input
+              id="where"
               placeholder="Onde irá ocorrer?"
               type="none"
               secondary

@@ -47,17 +47,16 @@ class SignIn extends Component {
           type="cel-phone"
           icon="phone"
           placeholder="Seu número de telefone"
-          ref={(ref) => { this.input = ref; }}
           editable={false}
         />
         <Input
+          id="password"
           onChangeText={(password) => { this.setState({ password }); }}
           value={this.state.password}
           type="none"
           icon="lock"
           placeholder="Sua senha secreta"
           secureTextEntry
-          ref={(ref) => { this.input = ref; }}
         />
         <Button
           title="Entrar"

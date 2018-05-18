@@ -50,10 +50,10 @@ class SignUp extends Component {
           type="cel-phone"
           icon="phone"
           placeholder="Seu número de telefone"
-          ref={(ref) => { this.input = ref; }}
           editable={false}
         />
         <Input
+          id="name"
           onChangeText={(name) => { this.setState({ name }); }}
           value={this.state.name}
           type="none"
@@ -61,6 +61,8 @@ class SignUp extends Component {
           placeholder="Nome completo"
         />
         <Input
+          id="password"
+          password="cellphone"
           onChangeText={(password) => { this.setState({ password }); }}
           value={this.state.password}
           type="none"

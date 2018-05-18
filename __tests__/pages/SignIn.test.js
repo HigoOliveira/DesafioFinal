@@ -70,4 +70,11 @@ describe('Testing SignIn Page', () => {
     expect(store.getActions()).toEqual([]);
     expect(Alert.alert.calledOnce).toBe(true);
   });
+
+  it('TextInput password changed', () => {
+    const passwordInput = wrapper.find('#password');
+    passwordInput.simulate('ChangeText', password);
+
+    expect(wrapper.state()).toEqual({ password });
+  });
 });

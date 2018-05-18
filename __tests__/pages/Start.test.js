@@ -9,6 +9,7 @@ import sinon from 'sinon';
  * Presentational
  */
 import Button from 'components/Button';
+import Input from 'components/Input';
 
 import Start from 'pages/Start';
 import Alert from 'components/Alert';
@@ -62,5 +63,11 @@ describe('Testing Start Page', () => {
     wrapper.find(Button).simulate('press');
     expect(store.getActions()).not.toContainEqual(ActionCreators.userGetInformation(''));
     expect(Alert.alert.calledOnce).toBe(true);
+  });
+
+  it('MaskedText changed state', () => {
+    const nameInput = wrapper.find(Input);
+    nameInput.simulate('ChangeText', cellphone);
+    expect(wrapper.state()).toEqual({ cellphone });
   });
 });

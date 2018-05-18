@@ -92,12 +92,17 @@ describe('Testing User Saga', () => {
     expect(sagaTester.getCalledActions()).toContainEqual(NavigationActions.navigate({ routeName: 'SignIn' }));
   });
 
-  it('User can\'t signup', () => {
+  it('User can\'t signup', async () => {
     apiMock.onPost('/api/signup')
       .reply(400);
+
+    sagaTester.dispatch(ActionCreators.userSignUp('+559999999999', 'Higo de Oliveira Ribeiro', 'senha1234'));
+    await sagaTester.waitFor(ActionCreators.userSignUpError().type);
+    expect(sagaTester.getLatestCalledAction()).toEqual(NotificationActions.notificationSendWarning({ text: 'Falha ao registrar usuário!' }));
   });
 
-  it('Update user', async () => {
+
+  it('Can update user', async () => {
     const token = 'umtokenvalido';
     apiMock.onPost('/api/user/update')
       .reply(200);
@@ -108,5 +113,13 @@ describe('Testing User Saga', () => {
     await sagaTester.waitFor(ActionCreators.userUpdateInformationSuccess().type);
     expect(sagaTester.getLatestCalledAction()).toEqual(NotificationActions.notificationSendAlert({ text: 'Seu perfil foi atualizado com sucesso!' }));
     expect(sagaTester.getCalledActions()).toContainEqual(ActionCreators.userUpdateInformationSuccess('Higo Ribeiro'));
+  });
+
+  it('Can\'t update user', async () => {
+    apiMock.onPost('/api/user/update')
+      .reply(400);
+
+    sagaTester.dispatch(ActionCreators.userUpdateInformation('Higo Ribeiro', 'newpass', 'newpass'));
+    await sagaTester.waitFor(ActionCreators.userUpdateInformationError().type);
   });
 });

@@ -15,6 +15,7 @@ import Input from 'components/Input';
 /* redux */
 import configureStore from 'redux-mock-store';
 import ActionCreators from 'store/ducks/user';
+import { NavigationActions } from 'react-navigation';
 
 const mockStore = configureStore([]);
 
@@ -69,5 +70,20 @@ describe('Testing SignUp Page', () => {
     wrapper.find('#signup').simulate('press');
     expect(store.getActions()).toEqual([]);
     expect(Alert.alert.calledOnce).toBe(true);
+  });
+
+  it('User already sign upped', () => {
+    wrapper.find('#signin').simulate('press');
+    expect(store.getActions()).toContainEqual(NavigationActions.navigate({ routeName: 'Start' }));
+  });
+
+  it('Texts changed state', () => {
+    const nameInput = wrapper.find('#name');
+    nameInput.simulate('ChangeText', name);
+
+    const passwordInput = wrapper.find('#password');
+    passwordInput.simulate('ChangeText', password);
+
+    expect(wrapper.state()).toEqual({ name, password });
   });
 });

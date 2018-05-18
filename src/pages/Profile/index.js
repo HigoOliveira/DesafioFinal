@@ -63,6 +63,7 @@ class Profile extends Component {
         </View>
         <View style={styles.mainContainer}>
           <Input
+            id="name"
             onChangeText={(name) => { this.setState({ name }); }}
             value={this.state.name}
             type="none"
@@ -71,6 +72,7 @@ class Profile extends Component {
           />
           <View style={styles.line} />
           <Input
+            id="password"
             onChangeText={(password) => { this.setState({ password }); }}
             value={this.state.password}
             type="none"
@@ -79,6 +81,7 @@ class Profile extends Component {
             secureTextEntry
           />
           <Input
+            id="confirmPassword"
             onChangeText={(confirmPassword) => { this.setState({ confirmPassword }); }}
             value={this.state.confirmPassword}
             type="none"

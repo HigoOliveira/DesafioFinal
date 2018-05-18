@@ -42,6 +42,7 @@ export function* signUp(action) {
       text: 'Usuário registrado com sucesso!',
     }));
   } else {
+    yield put(ActionCreators.userSignUpError());
     yield put(NotificationActions.notificationSendWarning({
       text: 'Falha ao registrar usuário!',
     }));
@@ -66,6 +67,7 @@ export function* updateInformation(action) {
       text: 'Seu perfil foi atualizado com sucesso!',
     }));
   } else {
+    yield put(ActionCreators.userUpdateInformationError());
     yield put(NotificationActions.notificationSendWarning({
       text: 'Falha ao atualizar seu perfil!',
     }));

@@ -116,4 +116,16 @@ describe('Modal', () => {
     expect(wrapper.state()).toEqual({ datetime: '', name: '', where: '' });
     expect(onCloseModal).toHaveBeenCalledTimes(1);
   });
+
+  it('Date and text changed', () => {
+    const dateInput = wrapper.find(InputDatePicker);
+    dateInput.simulate('DateChange', datetime);
+
+    const nameInput = wrapper.find('#name');
+    nameInput.simulate('ChangeText', name);
+
+    const whereInput = wrapper.find('#where');
+    whereInput.simulate('ChangeText', where);
+    expect(wrapper.state()).toEqual({ datetime, name, where });
+  });
 });

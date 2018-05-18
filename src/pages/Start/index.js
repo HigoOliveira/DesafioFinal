@@ -33,7 +33,7 @@ class Start extends Component {
       Alert.alert('Você precisa passar um número válido.');
     }
   }
-  
+
   render() {
     return (
       <View style={styles.container}>
