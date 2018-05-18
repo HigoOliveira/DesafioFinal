@@ -11,7 +11,6 @@ import { View } from 'react-native';
 import Alert from 'components/Alert';
 import Input from 'components/Input';
 import Button from 'components/Button';
-import Message from 'components/Message';
 
 import styles from './styles';
 
@@ -20,7 +19,6 @@ class SignIn extends Component {
     login: PropTypes.func.isRequired,
     cellphone: PropTypes.string.isRequired,
     loading: PropTypes.bool.isRequired,
-    msg: PropTypes.string.isRequired,
   }
   state = {
     password: '',
@@ -41,19 +39,9 @@ class SignIn extends Component {
     return cellphone.substring(3);
   }
 
-  renderMessage = () => {
-    if (this.props.msg) {
-      return (
-        <Message text={this.props.msg} />
-      );
-    }
-    return null;
-  }
-
   render() {
     return (
       <View style={styles.container}>
-        {this.renderMessage()}
         <Input
           value={this.number()}
           type="cel-phone"
@@ -84,7 +72,6 @@ class SignIn extends Component {
 const mapStateToProps = state => ({
   cellphone: state.user.cellphone,
   loading: state.user.loading,
-  msg: state.user.msg,
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -11,7 +11,6 @@ import { View } from 'react-native';
 import Alert from 'components/Alert';
 import Button from 'components/Button';
 import Input from 'components/Input';
-import Message from 'components/Message';
 
 import styles from './styles';
 
@@ -34,7 +33,7 @@ class Start extends Component {
       Alert.alert('Você precisa passar um número válido.');
     }
   }
-
+  
   render() {
     return (
       <View style={styles.container}>
