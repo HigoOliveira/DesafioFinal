@@ -12,62 +12,53 @@ import { colors, fonts } from 'styles';
 
 import styles from './styles';
 
-export default class InputDatePicker extends Component {
-  static propTypes = {
-    value: PropTypes.string,
-    onDateChange: PropTypes.func.isRequired,
-    placeholder: PropTypes.string,
-    secondary: PropTypes.bool,
-  };
+const InputDatePicker = ({
+  value,
+  placeholder,
+  secondary,
+  onDateChange,
+}) => (
+  <View style={[styles.container, secondary ? { backgroundColor: colors.gallery } : null]} >
+    <Icon name="calendar" size={20} color={secondary ? colors.dustyGrey : colors.white} style={styles.icon} />
+    <DatePicker
+      placeholder={placeholder}
+      style={[styles.input, { color: secondary && colors.dustyGrey }]}
+      date={value}
+      mode="datetime"
+      customStyles={{
+        dateIcon: {
+          display: 'none',
+        },
+        dateInput: {
+          borderWidth: 0,
+          alignItems: 'flex-start',
+        },
+        dateText: {
+          color: secondary ? colors.dustyGrey : colors.white,
+          textAlign: 'left',
+          fontSize: fonts.regular,
+        },
+        placeholderText: {
+          color: secondary ? colors.dustyGrey : colors.white,
+          fontSize: fonts.regular,
+        },
+      }}
+      onDateChange={onDateChange}
+    />
+  </View>
+);
 
-  static defaultProps = {
-    placeholder: '',
-    value: '',
-    secondary: true,
-  };
+InputDatePicker.propTypes = {
+  value: PropTypes.string,
+  onDateChange: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
+  secondary: PropTypes.bool,
+};
 
-  constructor(props) {
-    super(props);
-    this.input = null;
-  }
+InputDatePicker.defaultProps = {
+  placeholder: '',
+  value: '',
+  secondary: true,
+};
 
-  render() {
-    const {
-      value,
-      placeholder,
-      secondary,
-    } = this.props;
-
-    return (
-      <View style={[styles.container, secondary ? { backgroundColor: colors.gallery } : null]} >
-        <Icon name="calendar" size={20} color={secondary ? colors.dustyGrey : colors.white} style={styles.icon} />
-        <DatePicker
-          placeholder={placeholder}
-          style={[styles.input, { color: secondary ? colors.dustyGrey : null }]}
-          date={value}
-          mode="datetime"
-          customStyles={{
-            dateIcon: {
-              display: 'none',
-            },
-            dateInput: {
-              borderWidth: 0,
-              alignItems: 'flex-start',
-            },
-            dateText: {
-              color: secondary ? colors.dustyGrey : colors.white,
-              textAlign: 'left',
-              fontSize: fonts.regular,
-            },
-            placeholderText: {
-              color: secondary ? colors.dustyGrey : colors.white,
-              fontSize: fonts.regular,
-            },
-          }}
-          onDateChange={this.props.onDateChange}
-        />
-      </View>
-    );
-  }
-}
-console.disableYellowBox = true;
+export default InputDatePicker;
