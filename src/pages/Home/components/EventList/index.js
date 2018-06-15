@@ -22,8 +22,7 @@ const EventList = ({
   deleteEventRemote,
   scroll,
 }) => {
-  const eventsFiltered = events.filter(n =>
-    moment(n.datetime).format('YYYY-MM-DD') === moment(currentDate).format('YYYY-MM-DD'));
+  const eventsFiltered = events(currentDate);
   return (
     <React.Fragment>
       {
@@ -52,7 +51,8 @@ const EventList = ({
 };
 
 const mapStateToProps = state => ({
-  events: state.event.list,
+  events: currentDate => state.event.list.filter(event =>
+    moment(event.datetime).format('YYYY-MM-DD') === moment(currentDate).format('YYYY-MM-DD')),
 });
 
 const mapDispatchToProps = dispatch => ({
