@@ -24,7 +24,7 @@ const navReducer = (state = initialState, action) => {
     case '@@redux/INIT':
       return {
         ...state,
-        stateForLoggedIn: Routes.router.getStateForAction(ActionForLoggedIn, stateForLoggedOut),
+        stateForLoggedIn: Routes.router.getStateForAction(ActionForLoggedIn),
       };
     case UserTypes.USER_LOGIN_SUCCESS:
       return {
