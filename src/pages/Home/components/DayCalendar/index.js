@@ -18,7 +18,7 @@ class DayCalendar extends Component {
   }
 
   static defaultProps = {
-    onChangeDate: (date) => {},
+    onChangeDate: (_date) => {},
   }
 
   constructor(props) {

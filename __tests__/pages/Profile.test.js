@@ -48,7 +48,6 @@ describe('Profile', () => {
 
   function createWrapper() {
     const navigation = { setParams: jest.fn() };
-    
     return shallow(
       <Profile
         navigation={navigation}

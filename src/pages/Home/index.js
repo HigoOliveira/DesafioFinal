@@ -78,24 +78,7 @@ class Home extends Component {
       HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
       this.forceUpdate();
     } else {
-    // if (event.nativeEvent.layout.height === HEADER_MIN_HEIGHT) {
-    //   this.setState({ semana: true });
-    // } else if (this.state.semana) {
-    //   this.forceUpdate();
-    //   console.tron.log('CHAMOU ISSO DAQUI - 84');
-    // }
       const { height } = event.nativeEvent.layout;
-      // console.tron.log(height);
-      // if (height === HEADER_MIN_HEIGHT) {
-      //   console.tron.log('Sou o mesmo tamanho do height');
-      //   this.setState(() => ({ semana: true }));
-      // } else {
-      //   if (this.state.semana) {
-      //     this.setState(() => ({ semana: false }));
-      //     console.tron.log(this.state.semana);
-      //   }
-      //   console.tron.log('Já eu não sou');
-      // }
       if (height === HEADER_MIN_HEIGHT) {
         this.setState(() => ({ semana: true }));
       } else if (this.state.semana) {
@@ -114,11 +97,7 @@ class Home extends Component {
     this.setState({ showModal: true });
   }
 
-  swipeScrollEvent = (allowParentScroll) => {
-    // if (this.state.allowVerticalScroll !== allowParentScroll) {
-    // }
-    this.setState({ allowVerticalScroll: allowParentScroll });
-  }
+  swipeScrollEvent = allowParentScroll => this.setState({ allowVerticalScroll: allowParentScroll });
 
   renderCalendar = () => {
     if (this.state.semana) {
