@@ -27,6 +27,7 @@ class Profile extends Component {
     logout: PropTypes.func.isRequired,
     updateInformation: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired,
+    name: PropTypes.string.isRequired,
   };
   static navigationOptions = ({ navigation }) => ({
     title: 'SCHEDULE',
@@ -38,10 +39,13 @@ class Profile extends Component {
     ),
   });
 
-  state = {
-    name: '',
-    password: '',
-    confirmPassword: '',
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: props.name,
+      password: '',
+      confirmPassword: '',
+    };
   }
 
   componentDidMount() {
@@ -102,6 +106,7 @@ class Profile extends Component {
 
 const mapSTateToProps = state => ({
   loading: state.user.loading,
+  name: state.user.name,
 });
 
 const mapDispatchToProps = dispatch => ({
